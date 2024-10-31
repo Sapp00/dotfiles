@@ -7,3 +7,4 @@ Then clone the repository and run one of the following depending on the system:
     nix run .#homeConfigurations.darwin.activationPackage
     nix run .#nixos
 ```
+

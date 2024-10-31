@@ -24,48 +24,43 @@
   outputs = 
     { self, nixpkgs, nixpkgs-unstable, home-manager, ... }:
     let
-      inherit (nixpkgs.lib) nixosSystem genAttrs replaceStrings;
-      inherit (nixpkgs.lib.filesystem) packagesFromDirectoryRecursive listFilesRecursive;
+      lib = nixpkgs.lib;
 
-      systems = [
-          "x86_64-linux"
-          "aarch64-linux"
-          "x86_64-darwin"
-          "aarch64-darwin"
-      ];
-
-      forAllSystems =
-        function:
-        genAttrs systems
-          (system: function nixpkgs.legacyPackages.${system});
-
-      nameOf = path: replaceStrings [ ".nix" ] [ "" ] (baseNameOf (toString path));
-    in
-    {
-      packages = forAllSystems (
-        pkgs:
-        packagesFromDirectoryRecursive {
-          inherit (pkgs) callPackage;
-
-          directory = ./packages;
+      mkHomeModule = pkgs: system: hostname {
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            
+          };
         }
-      );
+      };
 
-      nixosModules = genAttrs (map nameOf (listFilesRecursive ./modules)) (
-        name: import ./modules/${name}.nix
-      );
+      import-unstable = system:
+        import nixpkgs-unstable {
+          system = system;
+          config.allowUnfree = true;
+        }
 
-      homeModules = genAttrs (map nameOf (listFilesRecursive ./home)) (name: import ./home/${name}.nix);
 
-      overlays = genAttrs (map nameOf (listFilesRecursive ./overlays)) (
-        name: import ./overlays/${name}.nix
-      );
-
-      /*pkgs-unstable = forAllSystems (import nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };*/
-
+      mkSystem = pkgs: system: hostname:
+        pkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            { networking.hostName = hostname; }
+            # generic configuration
+            ./modules/system/configuration.nix
+            (./. + "/hosts/${hostname}/hardware-configuration.nix")
+            home-manager.nixosModules.home-manager
+            {
+              useUserPackages = true;
+              useGlobalPkgs = true;
+              extraSpecialArgs = {
+                pkgs-unstable = import-unstable.${system};
+              };
+            }
+          ];
+        }
+    in{
       nixosConfigurations = {
         dev-pi = nixpkgs.lib.nixoSystem rec {
           system = "aarch64-linux";
