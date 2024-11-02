@@ -1,5 +1,5 @@
 # based on:
-https://github.com/wimpysworld/nix-config/blob/main/lib/helpers.nix
+#https://github.com/wimpysworld/nix-config/blob/main/lib/helpers.nix
 
 {
   inputs,
@@ -19,8 +19,9 @@ https://github.com/wimpysworld/nix-config/blob/main/lib/helpers.nix
     let
       isISO = builtins.substring 0 4 hostname == "iso-";
       isInstall = !isISO;
-      isLaptop = hostname != "vader" && hostname != "phasma" && hostname != "revan" && hostname != "malak";
+      isLaptop = hostname != "MauriceDesktop" && hostname != "devVM";
       isLima = hostname == "blackace" || hostname == "defender" || hostname == "fighter";
+      isLime = false;
       isWorkstation = builtins.isString desktop;
     in
     inputs.home-manager.lib.homeManagerConfiguration {
@@ -48,16 +49,16 @@ https://github.com/wimpysworld/nix-config/blob/main/lib/helpers.nix
   mkNixos =
     {
       hostname,
-      username ? "martin",
+      username ? "maurice",
       desktop ? null,
       platform ? "x86_64-linux",
     }:
     let
       isISO = builtins.substring 0 4 hostname == "iso-";
       isInstall = !isISO;
-      isLaptop = hostname != "vader" && hostname != "phasma" && hostname != "revan" && hostname != "malak";
+      isLaptop = hostname != "MauriceDesktop" && hostname != "devVM";
       isWorkstation = builtins.isString desktop;
-      tailNet = "drongo-gamma.ts.net";
+      #tailNet = "drongo-gamma.ts.net";
     in
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
@@ -73,7 +74,7 @@ https://github.com/wimpysworld/nix-config/blob/main/lib/helpers.nix
           isISO
           isLaptop
           isWorkstation
-          tailNet
+       #   tailNet
           ;
       };
       # If the hostname starts with "iso-", generate an ISO image
@@ -92,7 +93,7 @@ https://github.com/wimpysworld/nix-config/blob/main/lib/helpers.nix
     {
       desktop ? "aqua",
       hostname,
-      username ? "martin",
+      username ? "maurice",
       platform ? "aarch64-darwin",
     }:
     let

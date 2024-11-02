@@ -11,6 +11,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     stylix = {
       url = "github:danth/stylix";
 
@@ -22,95 +25,45 @@
   };
   
   outputs = 
-    { self, nixpkgs, nixpkgs-unstable, home-manager, ... }:
+    { self, nix-darwin, nixpkgs, ... }@inputs:
     let
-      lib = nixpkgs.lib;
+      inherit (self) outputs;
 
-      mkHomeModule = pkgs: system: hostname {
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            
-          };
-        }
-      };
+      inherit (nixpkgs.lib.filesystem) packagesFromDirectoryRecursive listFilesRecursive;
 
-      import-unstable = system:
-        import nixpkgs-unstable {
-          system = system;
-          config.allowUnfree = true;
-        }
-
-
-      mkSystem = pkgs: system: hostname:
-        pkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            { networking.hostName = hostname; }
-            # generic configuration
-            ./modules/system/configuration.nix
-            (./. + "/hosts/${hostname}/hardware-configuration.nix")
-            home-manager.nixosModules.home-manager
-            {
-              useUserPackages = true;
-              useGlobalPkgs = true;
-              extraSpecialArgs = {
-                pkgs-unstable = import-unstable.${system};
-              };
-            }
-          ];
-        }
+      stateVersion = "24.05";
+      helper = import ./lib { inherit inputs outputs stateVersion; };
     in{
+      
+      # nixOS
       nixosConfigurations = {
-        dev-pi = nixpkgs.lib.nixoSystem rec {
-          system = "aarch64-linux";
-
-          specialArgs.nix-config = self;
-          modules = listFilesRecursive ./hosts/nixos;
+        devVM = helper.mkNixos {
+          hostname = "devVM";
+          desktop = "hyprland";
         };
-        dev-vm = nixpkgs.lib.nixoSystem rec {
-          system = "x86_64-linux";
-          modules = listFilesRecursive ./hosts/nixos;
-
-          SpecialArgs = {
-            pkgs-unstable = import nixpkgs-unstable {
-              inherit system;
-              config.allowUnfree = true;
-            };
-
-            nix-config = self;
-          };
+        devPi = helper.mkNixos {
+          hostname = "devPi";
+          platform = "aarch64-linux";
         };
       };
       
       # non-NixOS
       homeConfigurations = {
-        desktop = home-manager.lib.homeManagerConfiguration rec{
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home.nix ];
-
-          extraSpecialArgs = {
-            pkgs-unstable = import nixpkgs-unstable {
-              system = "x86_64-linux";
-              config.allowUnfree = true;
-            };
-          };
+        desktop = helper.mkHome {
+          hostname = "MauriceDesktop";
         };
 
-        notebook = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-          modules = [ ./home.nix ];
-
-          extraSpecialArgs = {
-            pkgs-unstable = import nixpkgs-unstable {
-              system = "aarch64-darwin";
-              config.allowUnfree = true;
-            };
-          };
+        notebook = helper.mkDarwin {
+          hostname = "maurice-macbook";
         };
       };
 
-      formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
+      overlays = import ./overlays { inherit inputs; };
+      nixosModules = import ./modules/nixos;
+      # custom packages; accessible via 'nix build', 'nix shell' etc.
+      packages = helper.forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      # formatter for .nix files: accessible via 'nix fmt'
+      formatter = helper.forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
     };
 }
 
