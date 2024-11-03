@@ -25,36 +25,42 @@ in
         "/home/${username}";
 
     stateVersion = "24.05"; # Please read the comment before changing.
-    packages = with pkgs; [
-      # dev tools
-      unstable.neovim
-      (python3.withPackages (ppkgs: [
-        ppkgs.virtualenv
-      ]))
-      go
-      tmux
-      fzf
-      nodejs_22
-      llvm
-      lazygit
-      readline
-      clang
-      cmake
+    packages = with pkgs; 
+      [
+        # dev tools
+        unstable.neovim
+        (python3.withPackages (ppkgs: [
+          ppkgs.virtualenv
+        ]))
+        go
+        tmux
+        fzf
+        nodejs_22
+        llvm
+        lazygit
+        readline
+        clang
+        cmake
+        # # It is sometimes useful to fine-tune packages, for example, by applying
+        # # overrides. You can do that directly here, just don't forget the
+        # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+        # # fonts?
+        # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
-
-      # # It is sometimes useful to fine-tune packages, for example, by applying
-      # # overrides. You can do that directly here, just don't forget the
-      # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-      # # fonts?
-      # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-      # # You can also create simple shell scripts directly inside your
-      # # configuration. For example, this adds a command 'my-hello' to your
-      # # environment:
-      # (pkgs.writeShellScriptBin "my-hello" ''
-      #   echo "Hello, ${config.home.username}!"
-      # '')
-    ];
+        # # You can also create simple shell scripts directly inside your
+        # # configuration. For example, this adds a command 'my-hello' to your
+        # # environment:
+        # (pkgs.writeShellScriptBin "my-hello" ''
+        #   echo "Hello, ${config.home.username}!"
+        # '')
+      ]
+      ++ lib.optionals isLinux [
+        figlet
+      ]
+      ++ lib.optionals isDarwin [
+        coreutils
+        nh
+      ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
     # plain files is through 'home.file'.
