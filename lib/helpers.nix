@@ -2,6 +2,7 @@
 #https://github.com/wimpysworld/nix-config/blob/main/lib/helpers.nix
 
 {
+  self,
   inputs,
   outputs,
   stateVersion,
@@ -23,11 +24,14 @@
       isLima = hostname == "blackace" || hostname == "defender" || hostname == "fighter";
       isLime = false;
       isWorkstation = builtins.isString desktop;
+
+      homeModules = "${self}/home-manager/modules";
     in
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${platform};
       extraSpecialArgs = {
         inherit
+          self
           inputs
           outputs
           desktop
@@ -40,6 +44,7 @@
           isLima
           isISO
           isWorkstation
+          homeModules
           ;
       };
       modules = [ ../home-manager ];
