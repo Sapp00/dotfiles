@@ -15,8 +15,9 @@
 let
   inherit (pkgs.stdenv) isDarwin isLinux;
 
-  userModulesPath         = "${self}/users/${username}";
-  userModulesPathExist    = builtins.pathExists userModulesPath;
+  userModulesPath         = "${self}/home-manager/users/${username}";
+  #userModulesPathExist    = builtins.pathExists userModulesPath;
+  userModulesPathExist    = builtins.trace userModulesPath builtins.pathExists userModulesPath;
 
   homeDirectory = 
     if isDarwin then
