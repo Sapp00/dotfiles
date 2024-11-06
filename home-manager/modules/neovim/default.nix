@@ -31,6 +31,7 @@ in {
         fzf
         lazygit
         readline
+        ripgrep
         # compiler / interpreter
         gcc
         clang

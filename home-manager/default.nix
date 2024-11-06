@@ -42,7 +42,6 @@ in
     packages = with pkgs; 
       [
         # dev tools
-        #unstable.neovim
         (python3.withPackages (ppkgs: [
           ppkgs.virtualenv
         ]))
@@ -50,6 +49,7 @@ in
         nodejs_22
         clang
         cmake
+        go-task
       ]
       ++ lib.optionals isLinux [
         figlet

@@ -17,6 +17,7 @@
     #stylix.enable    = isWorkstation;
 
  #   btop.enable           = true;
+    go-task.enable          = true;
     eza.enable            = true;
     #git.enable            = true;
     #fzf.enable            = true;
