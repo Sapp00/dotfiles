@@ -1,6 +1,7 @@
 {
   homeModules,
   lib,
+  pkgs,
   ...
 }:
 let

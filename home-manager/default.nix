@@ -47,12 +47,7 @@ in
           ppkgs.virtualenv
         ]))
         go
-        tmux
-        fzf
         nodejs_22
-        llvm
-        lazygit
-        readline
         clang
         cmake
       ]

@@ -5,10 +5,6 @@
 , wmEnable ? false
 , ...
 }:
-
-let
-  valTrue = builtins.trace "fufu" true;
-in
 {
   nixpkgs.overlays = [  ];
 /*
@@ -20,8 +16,8 @@ in
   module = {
     #stylix.enable    = isWorkstation;
 
-    btop.enable           = valTrue;
-    #eza.enable            = true;
+ #   btop.enable           = true;
+    eza.enable            = true;
     #git.enable            = true;
     #fzf.enable            = true;
     #htop.enable           = true;
@@ -29,6 +25,7 @@ in
     #lazygit.enable        = true;
     nvim.enable           = true;
     fish.enable           = true;
+    tmux.enable           = true;
 
     /*user = {
       packages.enable = true;

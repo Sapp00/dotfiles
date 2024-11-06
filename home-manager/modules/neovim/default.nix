@@ -21,17 +21,25 @@ in {
     };
 
     programs.neovim = {
+      package = pkgs.unstable.neovim;
       enable = true;
       viAlias = true;
       vimAlias = true;
       defaultEditor = true;
 
       extraPackages = with pkgs; [
+        fzf
+        lazygit
+        readline
+        # compiler / interpreter
         gcc
+        clang
+        llvm
+        cmake
         nodejs_22
-        ansible-language-server
+        go
+        # lsp
         yaml-language-server
-        marksman
         gopls
         dockerfile-language-server-nodejs
         docker-compose-language-service
