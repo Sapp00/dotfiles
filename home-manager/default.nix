@@ -42,7 +42,7 @@ in
     packages = with pkgs; 
       [
         # dev tools
-        unstable.neovim
+        #unstable.neovim
         (python3.withPackages (ppkgs: [
           ppkgs.virtualenv
         ]))
