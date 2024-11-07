@@ -45,6 +45,11 @@
           hostname = "devPi";
           platform = "aarch64-linux";
         };
+        
+        iso-console = helper.mkNixos{
+          hostname = "iso-console";
+          username = "nixos";
+        };
       };
       
       # non-NixOS
@@ -57,6 +62,8 @@
           hostname = "maurice-macbook";
         };
       };
+
+
 
       overlays = import ./overlays { inherit inputs; };
       nixosModules = import ./modules/nixos;
