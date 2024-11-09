@@ -6,6 +6,9 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
 
+    nix-index-database.url = "github:Mic92/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -62,8 +65,6 @@
           hostname = "maurice-macbook";
         };
       };
-
-
 
       overlays = import ./overlays { inherit inputs; };
       nixosModules = import ./modules/nixos;
