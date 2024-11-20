@@ -66,6 +66,15 @@
         };
       };
 
+      # Darwin
+      # nix run nix-darwin -- switch --flake .#osx
+      darwinConfigurations = {
+        osx = helper.mkDarwin {
+          hostname = "MBP-von-Maurice";
+          platform = "aarch64-darwin";
+        };
+      };
+
       overlays = import ./overlays { inherit inputs; };
       nixosModules = import ./modules/nixos;
       # custom packages; accessible via 'nix build', 'nix shell' etc.
