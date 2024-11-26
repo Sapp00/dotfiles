@@ -4,17 +4,19 @@
   inputs,
   isLima,
   isWorkstation,
+  desktop,
   lib,
   outputs,
   pkgs,
   stateVersion,
   username,
-  homeModules,
   ...
 }:
 let
   inherit (pkgs.stdenv) isDarwin isLinux;
 
+
+  homeModules = "${self}/home-manager/modules";  
   userModulesPath         = "${self}/home-manager/users/${username}";
   #userModulesPathExist    = builtins.pathExists userModulesPath;
   userModulesPathExist    = builtins.trace userModulesPath builtins.pathExists userModulesPath;
@@ -32,7 +34,7 @@ in
     [
       "${homeModules}"
     ] 
-    ++ lib.optional isWorkstation ./_mixins/desktop
+    ++ lib.optional isWorkstation "${self}/home-manager/desktops/${desktop}"
     ++ lib.optional userModulesPathExist userModulesPath
   ;
   home = {
@@ -49,7 +51,6 @@ in
         nodejs_22
         clang
         cmake
-        go-task
       ]
       ++ lib.optionals isLinux [
         figlet
@@ -67,7 +68,7 @@ in
     };
   };
 
-  nixpkgs = {
+  /*nixpkgs = {
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
@@ -76,7 +77,7 @@ in
     config = {
       allowUnfree = true;
     };
-  };
+  };*/
 
 
   programs.git.enable = true;

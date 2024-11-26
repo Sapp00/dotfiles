@@ -12,9 +12,4 @@ in {
     module.yq.enable = mkEnableOption "Enables yq";
   };
 
-  config = mkIf cfg.enable {
-    programs.yq = {
-      enable = true;
-    };
-  };
 }

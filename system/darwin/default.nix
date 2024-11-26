@@ -1,25 +1,49 @@
 {
+  self,
   config,
   hostname,
   inputs,
   lib,
   outputs,
+  desktop,
   pkgs,
   platform,
+  isWorkstation,
+  isLima,
+  stateVersion,
   username,
   ...
 }:
 {
   imports = [
-   inputs.nix-index-database.darwinModules.nix-index
-    ./${hostname}
+    inputs.nix-index-database.darwinModules.nix-index
+    inputs.stylix.darwinModules.stylix
+
+    inputs.home-manager.darwinModules.home-manager
   ];
+
+  users.users.${username} = {
+    name = username;
+    home = "/Users/${username}";
+  };
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.${username} = import "${self}/home-manager" { inherit self inputs lib desktop outputs username isLima isWorkstation pkgs config stateVersion; };
 
   # Only install the docs I use
   documentation.enable = true;
   documentation.doc.enable = false;
   documentation.info.enable = false;
   documentation.man.enable = true;
+
+  stylix = {
+    enable = true;
+    image = pkgs.fetchurl {
+      url = "https://images.squarespace-cdn.com/content/v1/55c8073fe4b02a74ffe18e48/1516136461905-X2YASK3VZ9EU4YKKF8FX/dream_big__by_yuumei-dbygupq.jpg";
+      sha256 = "1cd6d51e0f0d67a4ea2b06cd531075dd5649022549b41a411ce0caac0c2abfbe";
+    };
+  };
 
   environment = {
     shells = [ pkgs.fish ];
@@ -31,6 +55,7 @@
       nvd
       plistwatch
       sops
+      home-manager
     ];
 
     variables = {

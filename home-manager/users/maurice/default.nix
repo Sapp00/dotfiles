@@ -7,14 +7,14 @@
 }:
 {
   nixpkgs.overlays = [  ];
-/*
-  stylix.targets = {
-    vscode.enable = false;
-    helix.enable = false;
+
+  /*stylix.targets = {
+    kitty.enable = true;
   };*/
 
   module = {
     #stylix.enable    = isWorkstation;
+    #stylix.enable = true;
 
  #   btop.enable           = true;
     go-task.enable          = true;

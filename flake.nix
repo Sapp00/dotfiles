@@ -19,11 +19,6 @@
 
     stylix = {
       url = "github:danth/stylix";
-
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
     };
   };
   
@@ -61,7 +56,9 @@
           hostname = "MauriceDesktop";
         };
 
-        notebook = helper.mkDarwin {
+        osx = helper.mkHome {
+          platform = "aarch64-darwin";
+          desktop = "osx";
           hostname = "maurice-macbook";
         };
       };

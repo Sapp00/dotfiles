@@ -16,6 +16,7 @@
 {
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
+    inputs.stylix.nixosModules.stylix
   ];
 
   environment = {
@@ -92,14 +93,14 @@
 
     nano.enable = lib.mkDefault false;
 
-    nh = {
+    /*nh = {
       clean = {
         enable = true;
         extraArgs = "--keep-since 15d --keep 10";
       };
       enable = true;
       flake = "/home-manager/users/${username}/Zero/nix-config";
-    };
+    };*/
     nix-index-database.comma.enable = isInstall;
     nix-ld = lib.mkIf isInstall {
       enable = true;

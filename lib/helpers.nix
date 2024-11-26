@@ -25,7 +25,6 @@
       isLime = false;
       isWorkstation = builtins.isString desktop;
 
-      homeModules = "${self}/home-manager/modules";
     in
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${platform};
@@ -44,7 +43,6 @@
           isLima
           isISO
           isWorkstation
-          homeModules
           ;
       };
       modules = [ ../home-manager ];
@@ -68,6 +66,7 @@
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit
+          self
           inputs
           outputs
           desktop
@@ -91,12 +90,12 @@
             else
               inputs.nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares.nix";
         in
-        [ ../nixos ] ++ inputs.nixpkgs.lib.optionals isISO [ cd-dvd ];
+        [ ../system/nixos ] ++ inputs.nixpkgs.lib.optionals isISO [ cd-dvd ];
     };
 
   mkDarwin =
     {
-      desktop ? "aqua",
+      desktop ? "osx",
       hostname,
       username ? "maurice",
       platform ? "aarch64-darwin",
@@ -110,6 +109,7 @@
     inputs.nix-darwin.lib.darwinSystem {
       specialArgs = {
         inherit
+          self
           inputs
           outputs
           desktop
@@ -123,7 +123,7 @@
           isWorkstation
           ;
       };
-      modules = [ ../darwin ];
+      modules = [ ../system/darwin ];
     };
 
   forAllSystems = inputs.nixpkgs.lib.genAttrs [

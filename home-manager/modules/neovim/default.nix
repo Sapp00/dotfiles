@@ -16,7 +16,7 @@ in {
 
   config = mkIf cfg.enable {
     xdg.configFile."nvim" = {
-      source = "${homeModules}/neovim/config";
+      source = ./config;
       recursive = true;
     };
 
