@@ -1,21 +1,12 @@
 { isWorkstation
 , isLinux
-, hyprlandEnable ? false
-, swayEnable ? false
-, wmEnable ? false
+, desktop
 , ...
 }:
 {
   nixpkgs.overlays = [  ];
 
-  /*stylix.targets = {
-    kitty.enable = true;
-  };*/
-
   module = {
-    #stylix.enable    = isWorkstation;
-    #stylix.enable = true;
-
  #   btop.enable           = true;
     go-task.enable          = true;
     eza.enable            = true;
@@ -27,6 +18,7 @@
     nvim.enable           = true;
     fish.enable           = true;
     tmux.enable           = true;
+    python.enable        = true;
 
     /*user = {
       packages.enable = true;

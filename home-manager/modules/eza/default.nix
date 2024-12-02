@@ -16,5 +16,10 @@ in {
     programs.eza = {
       enable = true;
     };
+
+    # TODO: This does not work.
+    home.shellAliases = {
+      ls = "eza";
+    };
   };
 }

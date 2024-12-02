@@ -17,9 +17,7 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    stylix = {
-      url = "github:danth/stylix";
-    };
+    nix-colors.url = "github:misterio77/nix-colors";
   };
   
   outputs = 

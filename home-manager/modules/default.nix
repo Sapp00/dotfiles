@@ -1,8 +1,10 @@
 {
+  self,
   homeModules,
   lib,
   pkgs,
   desktop,
+  username,
   ...
 }:
 {
@@ -12,9 +14,10 @@
     ./go-task
     ./kitty
     ./neovim
-    #./stylix
     ./tmux
+    ./python
   ];
+  
   /*imports = builtins.filter (module: lib.pathIsDirectory module) (
     map (module: "${homeModules}/${module}") (builtins.attrNames (builtins.readDir homeModules))
   );*/

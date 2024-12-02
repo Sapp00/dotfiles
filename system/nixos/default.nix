@@ -1,23 +1,36 @@
 {
+  self,
   config,
   hostname,
-  isInstall,
-  isWorkstation,
   inputs,
   lib,
-  modulesPath,
   outputs,
+  desktop,
   pkgs,
   platform,
+  isWorkstation,
+  isLima,
   stateVersion,
   username,
   ...
 }:
+let
+  isHomeManaged = false;
+in
 {
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
     inputs.stylix.nixosModules.stylix
   ];
+
+ users.users.${username} = {
+    name = username;
+    home = "/Users/${username}";
+  };
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.${username} = import "${self}/home-manager" { inherit self inputs lib desktop outputs username isLima isWorkstation pkgs config stateVersion isHomeManaged; };
 
   environment = {
     defaultPackages =

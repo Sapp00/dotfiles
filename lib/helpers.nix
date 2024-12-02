@@ -24,6 +24,7 @@
       isLima = hostname == "blackace" || hostname == "defender" || hostname == "fighter";
       isLime = false;
       isWorkstation = builtins.isString desktop;
+      isHomeManaged = false;
 
     in
     inputs.home-manager.lib.homeManagerConfiguration {
@@ -43,6 +44,7 @@
           isLima
           isISO
           isWorkstation
+          isHomeManaged
           ;
       };
       modules = [ ../home-manager ];
@@ -95,12 +97,12 @@
 
   mkDarwin =
     {
-      desktop ? "osx",
       hostname,
       username ? "maurice",
       platform ? "aarch64-darwin",
     }:
     let
+      desktop = "osx";
       isISO = false;
       isInstall = true;
       isLaptop = true;
