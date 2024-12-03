@@ -44,7 +44,7 @@
         
         iso-console = helper.mkNixos{
           hostname = "iso-console";
-          username = "nixos";
+          username = "maurice";
         };
       };
       
@@ -52,13 +52,12 @@
       homeConfigurations = {
         desktop = helper.mkHome {
           hostname = "MauriceDesktop";
+          desktop = "i3";
         };
-
-        osx = helper.mkHome {
-          platform = "aarch64-darwin";
-          desktop = "osx";
-          hostname = "maurice-macbook";
-        };
+        
+        wsl = helper.mkHome {
+          hostname = "maurice-wsl";
+        }
       };
 
       # Darwin

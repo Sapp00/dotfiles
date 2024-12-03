@@ -29,7 +29,8 @@ in
 
   users.users.${username} = {
     name = username;
-    home = "/Users/${username}";
+    isRealUser = true;
+    home = "/home/${username}";
   };
 
   home-manager.useGlobalPkgs = true;
