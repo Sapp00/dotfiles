@@ -14,8 +14,8 @@ let
   inherit (pkgs.stdenv) isDarwin isLinux;
 
   # TODO: This does not work. It does not receive the desktop arguments somehow
-  background_opacity = ".8";
-  #background_opacity = if builtins.isString desktop && isLinux then "0.8" else "1.0";
+  #background_opacity = ".8";
+  background_opacity = if builtins.isString desktop && isLinux then "0.8" else "1.0";
 in {
   options = {
     module.kitty.enable = mkEnableOption "Enables kitty";

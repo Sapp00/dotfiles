@@ -103,8 +103,6 @@
     }:
     let
       desktop = "osx";
-      isISO = false;
-      isInstall = true;
       isLaptop = true;
       isWorkstation = true;
     in
@@ -119,8 +117,6 @@
           platform
           username
           stateVersion
-          isInstall
-          isISO
           isLaptop
           isWorkstation
           ;

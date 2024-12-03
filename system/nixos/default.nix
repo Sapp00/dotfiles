@@ -12,24 +12,32 @@
   isLima,
   stateVersion,
   username,
+  isInstall
   ...
 }:
 let
   isHomeManaged = false;
+  desk = builtins.trace desktop desktop;
+  homeModules = "${self}/home-manager/modules";
 in
 {
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
-    inputs.stylix.nixosModules.stylix
+
+    inputs.home-manager.nixosModules.home-manager
+    ../common
   ];
 
- users.users.${username} = {
+  users.users.${username} = {
     name = username;
     home = "/Users/${username}";
   };
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
+  home-manager.sharedModules = [{
+    imports = [../../home-manager/modules];
+  }];
   home-manager.users.${username} = import "${self}/home-manager" { inherit self inputs lib desktop outputs username isLima isWorkstation pkgs config stateVersion isHomeManaged; };
 
   environment = {
