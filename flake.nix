@@ -37,6 +37,7 @@
           hostname = "devVM";
           desktop = "hyprland";
         };
+
         devPi = helper.mkNixos {
           hostname = "devPi";
           platform = "aarch64-linux";
@@ -57,7 +58,7 @@
         
         wsl = helper.mkHome {
           hostname = "maurice-wsl";
-        }
+        };
       };
 
       # Darwin

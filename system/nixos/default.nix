@@ -29,7 +29,6 @@ in
 
   users.users.${username} = {
     name = username;
-    isRealUser = true;
     home = "/home/${username}";
   };
 
