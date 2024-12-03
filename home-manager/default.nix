@@ -2,7 +2,6 @@
   self,
   config,
   inputs,
-  isLima,
   isWorkstation,
   desktop,
   lib,
@@ -28,8 +27,6 @@ let
   homeDirectory = 
     if isDarwin then
       "/Users/${username}"
-    else if isLima then
-      "/home/${username}.linux"
     else
       "/home/${username}";
 in

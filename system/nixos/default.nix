@@ -9,10 +9,9 @@
   pkgs,
   platform,
   isWorkstation,
-  isLima,
   stateVersion,
   username,
-  isInstall
+  isInstall,
   ...
 }:
 let
@@ -38,7 +37,7 @@ in
   home-manager.sharedModules = [{
     imports = [../../home-manager/modules];
   }];
-  home-manager.users.${username} = import "${self}/home-manager" { inherit self inputs lib desktop outputs username isLima isWorkstation pkgs config stateVersion isHomeManaged; };
+  home-manager.users.${username} = import "${self}/home-manager" { inherit self inputs lib desktop outputs username isWorkstation pkgs config stateVersion isHomeManaged; };
 
   environment = {
     defaultPackages =
