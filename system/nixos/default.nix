@@ -31,6 +31,7 @@ in
 
   users.users.${username} = {
     name = username;
+    isNormalUser = true;
     home = "/home/${username}";
   };
 

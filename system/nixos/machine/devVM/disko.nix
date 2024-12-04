@@ -1,3 +1,9 @@
+{ self
+, lib
+, hostname
+, pkgs
+, ...
+}:
   disko.devices = {
     disk = {
       main = {

@@ -9,7 +9,6 @@ let
   machineHardwareModulesPath = "${self}/system/machine/${hostname}/modules/hardware";
 in {
   imports = [
-    "/etc/nixos/hardware-configuration.nix"
     self.inputs.disko.nixosModules.disko
 
     ./disko.nix
