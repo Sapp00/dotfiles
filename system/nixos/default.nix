@@ -25,6 +25,8 @@ in
 
     inputs.home-manager.nixosModules.home-manager
     ../common
+    ./machine/${hostname}
+    
   ];
 
   users.users.${username} = {

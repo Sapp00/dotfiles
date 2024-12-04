@@ -10,6 +10,9 @@ let
 in {
   imports = [
     "/etc/nixos/hardware-configuration.nix"
+    self.inputs.disko.nixosModules.disko
+
+    ./disko.nix
   ];
 
   boot = {
