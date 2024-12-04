@@ -37,6 +37,11 @@ in
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
+  home-manager.extraSpecialArgs = {
+    inherit self
+    desktop
+    username;
+  };
   home-manager.sharedModules = [{
     imports = [../../home-manager/modules];
   }];
