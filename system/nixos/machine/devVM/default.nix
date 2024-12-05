@@ -19,7 +19,6 @@ in {
       grub = {
         enable = true;
         efiSupport = true;
-        efiInstallAsRemovable = true;
       };
       timeout = 0;
     };
