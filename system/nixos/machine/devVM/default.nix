@@ -21,7 +21,10 @@ in {
         efiSupport = true;
         efiInstallAsRemovable = true;
       };
+      timeout = 0;
     };
+
+    initrd.availableKernelModules = [ "uas" "virtio_blk" "virtio_pci" ];
   };
 
   hardware.enableRedistributableFirmware = true;
