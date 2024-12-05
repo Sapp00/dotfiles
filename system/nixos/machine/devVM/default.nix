@@ -16,7 +16,11 @@ in {
 
   boot = {
     loader = {
-      systemd-boot.enable = true;
+      grub = {
+        enable = true;
+        efiSupport = true;
+        efiInstallAsRemovable = true;
+      };
     };
   };
 
