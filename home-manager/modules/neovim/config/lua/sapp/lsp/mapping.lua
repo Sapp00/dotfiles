@@ -39,8 +39,8 @@ function M.mappings(client, bufnr)
   local diag_show = "<Cmd>lua vim.diagnostic.show()<CR>"
   local diag_show_opts = merge({ desc = "Show project diagnostics" }, opts)
 
-  vim.keymap.set('n', '<c-s>', buf_def_split, opts)
-  vim.keymap.set('n', '<c-\\>', buf_def_vsplit, opts)
+  vim.keymap.set('n', '<c-->', buf_def_split, opts)
+  vim.keymap.set('n', '<c-#>', buf_def_vsplit, opts)
   vim.keymap.set('n', '<c-]>', buf_def, opts)
   vim.keymap.set('n', '[x', diag_prev, diag_prev_opts)
   vim.keymap.set('n', ']r', diag_open_float, diag_open_float_opts)

@@ -41,7 +41,7 @@ in
   ;
 
   # we use rose-pine-dawn for all apps
-  colorScheme = nix-colors.colorSchemes.rose-pine-dawn;
+  colorScheme = nix-colors.colorSchemes.rose-pine-moon;
 
   home = {
     inherit username;

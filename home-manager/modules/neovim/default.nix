@@ -27,6 +27,11 @@ in {
       vimAlias = true;
       defaultEditor = true;
 
+/*
+      plugins = with pkgs.vimPlugins; [
+        lazy-nvim
+      ];*/
+
       extraPackages = with pkgs; [
         fzf
         lazygit
@@ -38,6 +43,7 @@ in {
         llvm
         cmake
         nodejs_22
+        rust-analyzer
         go
         # lsp
         yaml-language-server
