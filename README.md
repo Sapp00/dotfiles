@@ -20,6 +20,14 @@ Then clone the repository and run one of the following depending on the system:
         --disk main "$DISK_DEVICE"
 ```
 
+## WSL
+```
+    nix-shell -p git
+    git clone https://github.com/sapp00/dotfiles.git
+    cd dotfiles
+    sudo nixos-rebuild switch --flake .#WSL
+```
+
 ## NixOS Iso
 ```
     nix build .#nixosConfigurations.iso-console.config.system.build.isoImage
