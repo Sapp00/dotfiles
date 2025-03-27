@@ -5,6 +5,7 @@
   pkgs,
   desktop,
   username,
+  inputs,
   ...
 }:
 {

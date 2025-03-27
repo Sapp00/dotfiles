@@ -26,24 +26,26 @@ in
     inputs.home-manager.nixosModules.home-manager
     ../common
     ./machine/${hostname}
-    
   ];
 
   users.users.${username} = {
     name = username;
     isNormalUser = true;
     home = "/home/${username}";
+    extraGroups = [ "wheel" ];
   };
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.extraSpecialArgs = {
     inherit self
+    inputs
     desktop
+    pkgs
     username;
   };
   home-manager.sharedModules = [{
-    imports = [../../home-manager/modules];
+    imports = ["${self}/home-manager/modules"];
   }];
   home-manager.users.${username} = import "${self}/home-manager" { inherit self inputs lib desktop outputs username isWorkstation pkgs config stateVersion isHomeManaged; };
 
@@ -65,7 +67,7 @@ in
         nvd
         nvme-cli
         rsync
-        smartmontools
+	#smartmontools
         sops
       ];
 
@@ -141,7 +143,7 @@ in
   services = {
     fwupd.enable = isInstall;
     hardware.bolt.enable = true;
-    smartd.enable = isInstall;
+    #smartd.enable = isInstall;
   };
 
   system = {

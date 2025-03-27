@@ -4,7 +4,7 @@
   inputs = {
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
 
     nix-index-database.url = "github:Mic92/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
@@ -22,6 +22,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixCats = {
+      url = "github:BirdeeHub/nixCats-nvim";
+ #     inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nix-colors.url = "github:misterio77/nix-colors";
   };
@@ -53,6 +63,11 @@
           hostname = "iso-console";
           username = "maurice";
         };
+
+        WSL = helper.mkNixos {
+          hostname = "WSL";
+          desktop = "hyprland";
+        };
       };
       
       # non-NixOS
@@ -62,9 +77,6 @@
           desktop = "i3";
         };
         
-        wsl = helper.mkHome {
-          hostname = "maurice-wsl";
-        };
       };
 
       # Darwin
