@@ -43,6 +43,7 @@ in
         lspsAndRuntimeDeps = {
           general = with pkgs; [
             lazygit
+            xclip
           ];
           lua = with pkgs; [
             lua-language-server
@@ -70,9 +71,13 @@ in
             # but as a demo, we do it anyway.
             lze
             lzextras
-            snacks-nvim
-            onedark-nvim
-            vim-sleuth
+            snacks-nvim # TODO
+            rose-pine
+            oil-nvim
+            vim-devicons
+            nvim-web-devicons
+            mini-nvim
+            vim-sleuth # TODO
           ];
         };
 
@@ -86,7 +91,7 @@ in
             lazydev-nvim
           ];
           general = with pkgs.unstable.vimPlugins; [
-            mini-nvim
+            which-key-nvim
             nvim-lspconfig
             vim-startuptime
             blink-cmp
@@ -94,7 +99,6 @@ in
             lualine-nvim
             lualine-lsp-progress
             gitsigns-nvim
-            which-key-nvim
             nvim-lint
             conform-nvim
             nvim-dap
