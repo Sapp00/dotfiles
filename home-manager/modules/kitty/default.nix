@@ -85,6 +85,10 @@ in {
         ## end of template ##
         #####################
 
+        font_family	= "Iosevka Nerd Font";
+        bold_font	= "Iosevka Nerd Font Bold";
+        bold_italic_font = "Iosevka Nerd Font Bold Italic";
+        italic_font	= "Iosevka Nerd Font Italic";
         font_size = "16.0";
         enable_audio_bell = false;
 

@@ -68,6 +68,12 @@
           hostname = "WSL";
           desktop = "hyprland";
         };
+
+        WSL-proxy = helper.mkNixos {
+          hostname = "WSL";
+          desktop = "hyprland";
+          proxy = "http://localhost:3128";
+        };
       };
       
       # non-NixOS

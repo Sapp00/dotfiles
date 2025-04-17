@@ -1,11 +1,52 @@
-local header_art = 
-[[
+--local header_art = 
+--[[
  ╭╮╭┬─╮╭─╮┬  ┬┬╭┬╮
  │││├┤ │ │╰┐┌╯││││
  ╯╰╯╰─╯╰─╯ ╰╯ ┴┴ ┴
+--]]
+
+require("mini.extra").setup()
+
+require("mini.icons").setup({
+  lsp = {
+    ["function"] = { glyph = "󰡱", hl = "MiniIconsCyan" },
+  }
+})
+MiniIcons.mock_nvim_web_devicons()
+
+require("mini.pick").setup({
+  options = {
+    use_cache = true,
+  },
+})
+
+require("mini.files").setup({
+  windows = {
+    max_number = math.huge,
+    preview = false,
+    width_focus = 30,
+    width_nofocus = 20,
+    width_preview = 25,
+  },
+})
+
+local header_art_15 = [[
+⠀⠀⠀⠀⠀ ⠀⠀⠀⢀⣠⣶⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢀⣴⡿⠿⠟⣁⣠⣤⣴⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⢀⣼⣿⠿⣿⣿⣿⣿⣿⣿⣿⢿⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⣰⠟⠁ ⠀⢸⣿⡿⣿⣿⣿⣿⠁⣿⠇⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀
+⠀⠀⡼⠁⠀⠀⠀⠀⠘⢿⣆⣿⣿⣿⣿⢟⠋⣴⡒⠚⠋⠉⠉⠉⠉⠉⠉⢳⡄⠀
+⠀⠸⡇⠀⠀⠀ ⠀⣀⣠⠭⢟⣛⣛⣵⣿⣿⡛⠛⠛⠂⠀⠀⠀⠀ ⣠⠞⠁⠀
+⠀⠀⠉⠙⠓⠛⠛⠉⠁ ⠀⠛⠉⠀⢹⣿⣿⣿⣦⡀⠀⠀ ⢀⣠⠞⠁⠀⠀ 
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⣧⣤⠖⠋⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⣿⣿⣿⣿⠿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢝⠋⠛⠛⠋⠀⠈⢿⡄⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣷⡀⠀⠀⠀⠀⢸⣿⡄⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢿⡇⠀⠀⠀⠀⠈⣿⣷⡀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿⡇⠀⠀   
 ]]
 
-local header_art = 
+local header_art_max = 
 [[
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⣶⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -58,41 +99,59 @@ local header_art =
 --	[[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
 --	[[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
 --	[[                                                                       ]],
---]]
---[[
-return {
-  "mini-nvim",
-  event = "DeferredUIEnter",
-  after = function()
---]]
-    require("mini.sessions").setup({
-      autoread = false,
-      autowrite = false,
-      directory = "~/.vim/sessions",
-      file = '' -- 'Session.vim',
-    })
-    local starter = require("mini.starter")
-    starter.setup({
-      items = {
-        starter.sections.sessions(77, true),
-        starter.sections.builtin_actions()
-      },
-      content_hooks = {
-        function(content)
-          local blank_content_line = { { type = 'empty', string = '' } }
-          local section_coords = starter.content_coords(content, 'section')
 
-          for i = #section_coords, 1, -1 do
-            table.insert(content, section_coords[i].line + 1, blank_content_line)
-          end
-          return content
-        end,
-        starter.gen_hook.adding_bullet("»"),
-        starter.gen_hook.aligning('center', 'center'),
-      },
-      header = header_art,
-      footer = ''
-    })
+local function get_header()
+  if vim.o.lines < 40 then
+    return header_art_15
+  else 
+    return header_art_max
+  end
+end
 
---  end,
---}
+require("mini.sessions").setup({
+  autoread = false,
+  autowrite = false,
+  directory = "~/.vim/sessions",
+  file = '' -- 'Session.vim',
+})
+local starter = require("mini.starter")
+starter.setup({
+--  items = {
+--    starter.sections.sessions(77, true),
+--    starter.sections.builtin_actions()
+--  },
+  evaluate_single = true,
+  items = {
+    {
+      name = "   Bookmarked Files",
+      action = "lua MiniExtra.pickers.visit_paths { filter = 'todo' }",
+      section = " Actions ",
+    },
+    {
+      name = "   Open Blank File",
+      action = ":enew",
+      section = " Actions ",
+    },
+    {
+      name = "   Find Files",
+      action = "lua MiniPick.builtin.files()",
+      section = " Actions ",
+    },
+    {
+      name = "   Recent Files",
+      action = "lua MiniExtra.pickers.oldfiles()",
+      section = " Actions ",
+    },
+    {
+      name = "   Quit2",
+      action = ":q!",
+      section = " Actions ",
+    },
+  },
+  content_hooks = {
+    starter.gen_hook.aligning("center", "center"),
+  },
+  header = get_header(),
+  footer = os.date("%B %d, %I:%M %p"),
+})
+

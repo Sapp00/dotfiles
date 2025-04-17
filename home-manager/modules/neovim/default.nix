@@ -1,9 +1,9 @@
 { lib, config, pkgs, homeModules, inputs ? {}, ... }@args:
 
-assert builtins.trace "loading home manager blabla" true;
-assert builtins.trace "args keys: ${builtins.concatStringsSep ", " (builtins.attrNames args)}" true;
+# assert builtins.trace "loading home manager blabla" true;
+# assert builtins.trace "args keys: ${builtins.concatStringsSep ", " (builtins.attrNames args)}" true;
 
-assert builtins.trace "plugins: ${toString (builtins.attrNames pkgs.unstable.vimPlugins)}" true;
+# assert builtins.trace "plugins: ${toString (builtins.attrNames pkgs.unstable.vimPlugins)}" true;
 
 with lib;
 
@@ -71,13 +71,14 @@ in
             # but as a demo, we do it anyway.
             lze
             lzextras
-            snacks-nvim # TODO
             rose-pine
             oil-nvim
-            vim-devicons
-            nvim-web-devicons
+            #vim-devicons
+            #nvim-web-devicons
+            baleia-nvim
             mini-nvim
             vim-sleuth # TODO
+            snacks-nvim # TODO
           ];
         };
 
@@ -91,6 +92,8 @@ in
             lazydev-nvim
           ];
           general = with pkgs.unstable.vimPlugins; [
+            plenary-nvim
+            lazygit-nvim
             which-key-nvim
             nvim-lspconfig
             vim-startuptime

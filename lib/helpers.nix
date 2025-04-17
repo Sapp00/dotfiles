@@ -57,12 +57,14 @@
       username ? "maurice",
       desktop ? null,
       platform ? "x86_64-linux",
+      proxy ? ""
     }:
     let
       isISO = builtins.substring 0 4 hostname == "iso-";
       isInstall = !isISO;
       isLaptop = hostname != "MauriceDesktop" && hostname != "devVM";
       isWorkstation = builtins.isString desktop;
+      hasProxy = builtins.isString proxy;
       #tailNet = "drongo-gamma.ts.net";
     in
     inputs.nixpkgs.lib.nixosSystem {
@@ -80,6 +82,8 @@
           isISO
           isLaptop
           isWorkstation
+          hasProxy
+          proxy
        #   tailNet
           ;
       };

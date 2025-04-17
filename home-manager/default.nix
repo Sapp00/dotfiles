@@ -35,7 +35,7 @@ in
     [
       nix-colors.homeManagerModules.default
     ] 
-    ++ lib.optional isWorkstation "${self}/home-manager/desktops/${desktop}"
+    ++ lib.optional isWorkstation "${self}/home-manager/desktops"
     ++ lib.optional userModulesPathExist userModulesPath
     ++ lib.optional isHomeManaged commonModules
   ;
@@ -54,6 +54,7 @@ in
         nodejs_22
         clang
         cmake
+        moreutils
       ]
       ++ lib.optionals isLinux [
         figlet
