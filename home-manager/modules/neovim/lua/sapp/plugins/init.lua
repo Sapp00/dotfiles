@@ -5,5 +5,7 @@ require("sapp.plugins.snacks")
 
 return {
   { import = "sapp.plugins.which" },
+  { import = "sapp.plugins.neogen" },
+  { import = "sapp.plugins.LSPs" },
 --  { import = "sapp.plugins.lazygit" }
 }

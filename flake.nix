@@ -10,7 +10,7 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -30,7 +30,7 @@
 
     nixCats = {
       url = "github:BirdeeHub/nixCats-nvim";
- #     inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-colors.url = "github:misterio77/nix-colors";

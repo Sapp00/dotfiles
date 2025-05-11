@@ -40,20 +40,35 @@ in
         # this section is for dependencies that should be available
         # at RUN TIME for plugins. Will be available to PATH within neovim terminal
         # this includes LSPs
-        lspsAndRuntimeDeps = {
-          general = with pkgs; [
+        lspsAndRuntimeDeps = with pkgs; {
+          general = [
             lazygit
             xclip
+            bash-language-server
           ];
-          lua = with pkgs; [
+          C = [
+            clang-tools
+            valgrind
+            cmake-language-server
+            cpplint
+            cmake
+            cmake-format
+          ];
+          markdown = [
+            marksman
+            harper
+          ];
+          lua = [
             lua-language-server
             stylua
           ];
-          nix = with pkgs; [
+          nix = [
             nixd
-            alejandra
+            nix-doc
+            nil
+            nixfmt-rfc-style
           ];
-          go = with pkgs; [
+          go = [
             gopls
             delve
             golint
@@ -62,6 +77,36 @@ in
             go-tools
             go
           ];
+          python = [
+            python3
+            python312Packages.python-lsp-server
+            python312Packages.pytest
+            python312Packages.debugpy
+          ];
+          rust = [
+            cargo
+            rust-analyzer
+            clippy
+          ];
+          web = {
+            templ = [
+              templ
+            ];
+            tailwindcss = [
+              tailwindcss-language-server
+            ];
+            HTMX = [
+              htmx-lsp
+            ];
+            HTML = [
+              vscode-langservers-extracted
+            ];
+            JS = with nodePackages; [
+              typescript-language-server
+              eslint
+              prettier
+            ];
+          };
         };
 
         # This is for plugins that will load at startup without using packadd:
@@ -73,25 +118,43 @@ in
             lzextras
             rose-pine
             oil-nvim
-            #vim-devicons
-            #nvim-web-devicons
-            baleia-nvim
+            baleia-nvim # potentially remove
             mini-nvim
+            luasnip # potentially remove
             vim-sleuth # TODO
-            snacks-nvim # TODO
+            snacks-nvim # fix slightly
+          ];
+
+          rust = [
+            pkgs.unstable.vimPlugins.rustaceanvim
           ];
         };
 
         # not loaded automatically at startup.
         # use with packadd and an autocommand in config to achieve lazy loading
-        optionalPlugins = {
-          go = with pkgs.unstable.vimPlugins; [
+        optionalPlugins = with pkgs.unstable.vimPlugins; {
+          go = [
             nvim-dap-go
           ];
-          lua = with pkgs.unstable.vimPlugins; [
+          lua = [
             lazydev-nvim
           ];
-          general = with pkgs.unstable.vimPlugins; [
+          vimagePreview = [
+            image-nvim
+          ];
+          C = [
+            vim-cmake
+            clangd_extensions-nvim
+          ];
+          python = [
+            nvim-dap-python
+          ];
+          otter = [
+            otter-nvim
+          ];
+
+          general = [
+            neogen
             plenary-nvim
             lazygit-nvim
             which-key-nvim
@@ -103,10 +166,20 @@ in
             lualine-lsp-progress
             gitsigns-nvim
             nvim-lint
-            conform-nvim
+            conform-nvim # TODO
+            nvim-dap-ui
+            nvim-dap-virtual-text
+          ];
+
+          debug = [
             nvim-dap
             nvim-dap-ui
             nvim-dap-virtual-text
+          ];
+
+          markdown = [
+            render-markdown-nvim
+            markdown-preview-nvim
           ];
         };
 
@@ -153,6 +226,9 @@ in
             # IMPORTANT:
             # your alias may not conflict with your other packages.
             aliases = [ "vim" "homeVim" ];
+
+            neovim-unwrapped = pkgs.unstable.neovim-unwrapped;
+
             # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
           };
           # and a set of categories that you want
@@ -160,9 +236,18 @@ in
           # and a set of categories that you want
           categories = {
             general = true;
+            bash = true;
+            debug = true;
+            go = true;
             lua = true;
+            markdown = true;
             nix = true;
-            go = false;
+            otter = true;
+            other = true;
+            python = true;
+            rust = true;
+            vimagePreview = true;
+            web = true;
           };
           # anything else to pass and grab in lua with `nixCats.extra`
           extra = {

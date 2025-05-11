@@ -30,6 +30,10 @@ keymap.set("n", "<C-m>", "<C-i>", opts)
 -- Reload config (TEST)
 keymap.set({"n", "v"}, "<leader>sv", ":source $MYVIMRC<CR>", {desc = "Reload config"})
 
+-- diagnostics
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
 --[[
 -- New tab
 keymap.set("n", "te", ":tabedit", {desc = "Edit tabs"})

@@ -14,6 +14,9 @@ require("mini.icons").setup({
 })
 MiniIcons.mock_nvim_web_devicons()
 
+require("mini.git").setup()
+require("mini.statusline").setup()
+
 require("mini.pick").setup({
   options = {
     use_cache = true,
@@ -27,6 +30,28 @@ require("mini.files").setup({
     width_focus = 30,
     width_nofocus = 20,
     width_preview = 25,
+  },
+})
+
+require("mini.comment").setup()
+
+require("mini.completion").setup()
+
+require("mini.pairs").setup({
+  mappings = {
+    ["<"] = { action = "closeopen", pair = "<>", neigh_pattern = "[^\\].", register = { cr = false } },
+  },
+})
+
+local hipatterns = require("mini.hipatterns")
+
+hipatterns.setup({
+  highlighters = {
+    fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+    hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
+    todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
+    note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
+    hex_color = hipatterns.gen_highlighter.hex_color(),
   },
 })
 
