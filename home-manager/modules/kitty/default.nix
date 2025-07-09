@@ -24,6 +24,7 @@ in {
   config = mkIf cfg.enable {
     programs.kitty = {
       enable = true;
+
       settings = {
         ##############################
         ## template from nix-colors ##
@@ -112,9 +113,9 @@ in {
 
       keybindings = {
         # used by fzf in vim
-        "ctrl+shift+v" = "no_op";
-        "ctrl+shift+s" = "no_op";
-        "alt+shift+p" = "no_op";
+        #"ctrl+shift+v" = "no_op";
+        #"ctrl+shift+s" = "no_op";
+        #"alt+shift+p" = "no_op";
 
         # disable split-screen
         "cmd+enter" = "no_op";
@@ -123,5 +124,8 @@ in {
         "ctrl+shift+t" = "new_tab_with_cwd";
       };
     };
+
+    home.packages = mkIf isLinux [ pkgs.xclip ];
   };
+
 }

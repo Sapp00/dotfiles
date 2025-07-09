@@ -56,8 +56,11 @@ in {
         set -g mouse on
 
         set-window-option -g mode-keys vi
+        bind-key Enter copy-mode
 
         bind-key -T copy-mode-vi 'v' send -X begin-selection
+
+
         bind-key -T copy-mode-vi 'y' send -X copy-selection
 
         unbind -T copy-mode-vi MouseDragEnd1Pane
