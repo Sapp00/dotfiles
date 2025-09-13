@@ -20,8 +20,9 @@ in {
 
     programs.tmux = {
       enable = true;
+      shell = "${pkgs.zsh}/bin/zsh";
       plugins = with pkgs.tmuxPlugins; [
-        sensible
+      #  sensible
         fzf-tmux-url
         resurrect
         continuum
@@ -32,6 +33,15 @@ in {
 
       extraConfig = ''
         set -g default-terminal "screen-256color"
+
+        # sensible stuff
+        set -s escape-time 0
+        set -g history-limit 50000
+        set -g display-time 4000
+        set -g status-interval 5
+        set -g status-keys emacs
+        set -g focus-events on
+        
 
         set -g prefix C-a
         unbind C-b

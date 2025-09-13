@@ -12,6 +12,7 @@
   imports = [
     ./eza
     ./fish
+    ./zsh
     ./go-task
     ./kitty
     ./neovim

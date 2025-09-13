@@ -32,6 +32,7 @@ in
     name = username;
     isNormalUser = true;
     home = "/home/${username}";
+    shell = pkgs.zsh;
     extraGroups = [ "wheel" ];
   };
 
@@ -50,6 +51,8 @@ in
   home-manager.users.${username} = import "${self}/home-manager" { inherit self inputs lib desktop outputs username isWorkstation pkgs config stateVersion isHomeManaged; };
 
   environment = {
+    shells = [ pkgs.zsh ];
+    
     defaultPackages =
       with pkgs;
       lib.mkForce [
@@ -114,7 +117,7 @@ in
 
   programs = {
     command-not-found.enable = false;
-    fish = {
+    zsh = {
       enable = true;
       shellAliases = {
         nano = "micro";
