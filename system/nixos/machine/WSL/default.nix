@@ -20,6 +20,7 @@ in {
   wsl = {
     enable = true;
     defaultUser = username;
+    startMenuLaunchers = true;
   };
 
   # Enable NVIDIA GPU support for WSL

@@ -126,6 +126,18 @@ in {
     };
 
     home.packages = mkIf isLinux [ pkgs.xclip ];
+
+    # Create desktop entry for WSL integration
+    xdg.desktopEntries = mkIf isLinux {
+      kitty = {
+        name = "Kitty Terminal";
+        comment = "Fast, feature-rich, GPU-accelerated terminal emulator";
+        exec = "kitty";
+        icon = "kitty";
+        categories = [ "System" "TerminalEmulator" ];
+        startupNotify = true;
+      };
+    };
   };
 
 }
