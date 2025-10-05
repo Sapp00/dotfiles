@@ -4,6 +4,7 @@
 , pkgs
 , hasProxy
 , proxy
+, username
 , ...
 }:
 
@@ -16,7 +17,10 @@ in {
     self.inputs.nixos-wsl.nixosModules.default
   ];
 
-  wsl.enable = true;
+  wsl = {
+    enable = true;
+    defaultUser = username;
+  };
 
   # Enable NVIDIA GPU support for WSL
   hardware.graphics = {
