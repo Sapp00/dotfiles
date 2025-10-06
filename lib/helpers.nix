@@ -7,7 +7,10 @@
   outputs,
   stateVersion,
   ...
-}:
+}@args:
+let
+  lib = inputs.nixpkgs.lib;
+in
 {
   # Helper function for generating home-manager configs
   mkHome =
@@ -20,7 +23,7 @@
     let
       isISO = builtins.substring 0 4 hostname == "iso-";
       isInstall = !isISO;
-      isLaptop = hostname != "MauriceDesktop" && hostname != "devVM";
+      isLaptop = builtins.match ".*laptop.*" (lib.toLower hostname) != null;
       isLima = hostname == "blackace" || hostname == "defender" || hostname == "fighter";
       isLime = false;
       isWorkstation = builtins.isString desktop;
@@ -57,12 +60,13 @@
       username ? "maurice",
       desktop ? null,
       platform ? "x86_64-linux",
-      proxy ? ""
+      proxy ? "",
+      nvidia ? false
     }:
     let
       isISO = builtins.substring 0 4 hostname == "iso-";
       isInstall = !isISO;
-      isLaptop = hostname != "MauriceDesktop" && hostname != "devVM";
+      isLaptop = builtins.match ".*laptop.*" (lib.toLower hostname) != null;
       isWorkstation = builtins.isString desktop;
       hasProxy = builtins.isString proxy;
       #tailNet = "drongo-gamma.ts.net";
@@ -84,6 +88,7 @@
           isWorkstation
           hasProxy
           proxy
+          nvidia
        #   tailNet
           ;
       };

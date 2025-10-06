@@ -26,6 +26,7 @@ in
     inputs.home-manager.nixosModules.home-manager
     ../common
     ./machine/${hostname}
+    ./modules/nvidia.nix
   ];
 
   users.users.${username} = {

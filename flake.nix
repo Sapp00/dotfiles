@@ -67,12 +67,20 @@
         WSL = helper.mkNixos {
           hostname = "WSL";
           desktop = "hyprland";
+          nvidia = true;
         };
 
         WSL-proxy = helper.mkNixos {
           hostname = "WSL";
           desktop = "hyprland";
           proxy = "http://localhost:3128";
+          nvidia = true;
+        };
+
+        WSL-laptop = helper.mkNixos {
+          hostname = "WSL-laptop";
+          desktop = "hyprland";
+          nvidia = true;
         };
       };
       
