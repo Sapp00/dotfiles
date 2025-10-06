@@ -87,7 +87,10 @@ in
   # Enable XDG for proper desktop integration on Linux
   xdg.enable = isLinux;
 
-  programs.git.enable = true;
+  programs.git = {
+    enable = true;
+    userName = username;
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
