@@ -10,6 +10,8 @@
   stateVersion,
   username,
   isHomeManaged,
+  hostname ? "",
+  isWSL ? false,
   ...
 }:
 let

@@ -27,6 +27,7 @@ in
       isLima = hostname == "blackace" || hostname == "defender" || hostname == "fighter";
       isLime = false;
       isWorkstation = builtins.isString desktop;
+      isWSL = builtins.match ".*WSL.*" hostname != null;
       isHomeManaged = false;
 
     in
@@ -48,6 +49,7 @@ in
           isISO
           isWorkstation
           isHomeManaged
+          isWSL
           ;
       };
       modules = [ ../home-manager ];
@@ -61,13 +63,15 @@ in
       desktop ? null,
       platform ? "x86_64-linux",
       proxy ? "",
-      nvidia ? false
+      nvidia ? false,
+      docker ? false
     }:
     let
       isISO = builtins.substring 0 4 hostname == "iso-";
       isInstall = !isISO;
       isLaptop = builtins.match ".*laptop.*" (lib.toLower hostname) != null;
       isWorkstation = builtins.isString desktop;
+      isWSL = builtins.match ".*WSL.*" hostname != null;
       hasProxy = builtins.isString proxy;
       #tailNet = "drongo-gamma.ts.net";
     in
@@ -86,9 +90,11 @@ in
           isISO
           isLaptop
           isWorkstation
+          isWSL
           hasProxy
           proxy
           nvidia
+          docker
        #   tailNet
           ;
       };

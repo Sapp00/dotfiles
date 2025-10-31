@@ -109,6 +109,9 @@ in {
         macos_option_as_alt = "left";
 
         paste_actions = "replace-dangerous-control-codes,filter";
+      } // lib.optionalAttrs (isLinux && builtins.getEnv "WSL_DISTRO_NAME" != "") {
+        # Force X11 in WSL to avoid Wayland issues
+        linux_display_server = "x11";
       };
 
       keybindings = {

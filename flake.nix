@@ -81,6 +81,7 @@
           hostname = "WSL-laptop";
           desktop = "hyprland";
           nvidia = true;
+          docker = true;
         };
       };
       

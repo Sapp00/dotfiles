@@ -24,11 +24,14 @@ in {
       plugins = with pkgs.tmuxPlugins; [
       #  sensible
         fzf-tmux-url
-        resurrect
-        continuum
       ]
       ++ lib.optionals cfg.nvim [
         vim-tmux-navigator
+      ]
+      ++ [
+        # resurrect must come before continuum
+        resurrect
+        continuum
       ];
 
       extraConfig = ''

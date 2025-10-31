@@ -12,6 +12,7 @@
   stateVersion,
   username,
   isInstall,
+  isWSL ? false,
   ...
 }:
 let
@@ -27,6 +28,7 @@ in
     ../common
     ./machine/${hostname}
     ./modules/nvidia.nix
+    ./modules/containers.nix
   ];
 
   users.users.${username} = {
@@ -49,7 +51,7 @@ in
   home-manager.sharedModules = [{
     imports = ["${self}/home-manager/modules"];
   }];
-  home-manager.users.${username} = import "${self}/home-manager" { inherit self inputs lib desktop outputs username isWorkstation pkgs config stateVersion isHomeManaged; };
+  home-manager.users.${username} = import "${self}/home-manager" { inherit self inputs lib desktop outputs username isWorkstation pkgs config stateVersion isHomeManaged isWSL hostname; };
 
   environment = {
     shells = [ pkgs.zsh ];

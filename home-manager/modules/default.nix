@@ -6,6 +6,8 @@
   desktop,
   username,
   inputs,
+  hostname ? "",
+  isWSL ? false,
   ...
 }:
 {

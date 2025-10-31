@@ -1,6 +1,7 @@
 { isWorkstation
 , isLinux
 , desktop
+, isWSL ? false
 , ...
 }:
 {
