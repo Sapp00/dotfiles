@@ -54,6 +54,10 @@ in
         nodejs_22
         clang
         cmake
+        cargo
+        # basic stuff
+        openssl
+        pkg-config
       ]
       ++ lib.optionals isLinux [
         figlet

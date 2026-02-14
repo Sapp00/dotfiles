@@ -57,7 +57,13 @@ in {
         lua-language-server
         stylua
         pyright
-      ];
+      ]
+      # darwin specific
+      ++ lib.optionals pkgs.stdenv.isDarwin [
+        pkgs.libiconv
+        pkgs.darwin.apple_sdk.frameworks.SystemConfiguration
+      ]
+      ;
     };
   };
 }

@@ -12,7 +12,6 @@ vim.g.rustaceanvim = {
     -- LSP configuration
     server = {
       on_attach = function(client, bufnr)
-        print("hiiiii")
         maps.mappings(client, bufnr)
 
 --       require("lsp-inlayhints").setup({
