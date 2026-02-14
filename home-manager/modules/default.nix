@@ -5,12 +5,16 @@
   pkgs,
   desktop,
   username,
+  inputs,
+  hostname ? "",
+  isWSL ? false,
   ...
 }:
 {
   imports = [
     ./eza
     ./fish
+    ./zsh
     ./go-task
     ./kitty
     ./neovim

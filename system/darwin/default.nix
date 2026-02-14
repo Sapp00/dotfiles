@@ -29,6 +29,7 @@ in
   users.users.${username} = {
     name = username;
     home = "/Users/${username}";
+    shell = pkgs.zsh;
   };
 
   home-manager.useGlobalPkgs = true;
@@ -50,7 +51,7 @@ in
   documentation.man.enable = true;
 
   environment = {
-    shells = [ pkgs.fish ];
+    shells = [ pkgs.zsh ];
     systemPackages = with pkgs; [
       git
       # m-cli
@@ -104,7 +105,7 @@ in
   networking.computerName = hostname;
 
   programs = {
-    fish = {
+    zsh = {
       enable = true;
       shellAliases = {
         nano = "micro";

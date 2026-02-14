@@ -26,6 +26,7 @@ in {
   config = mkIf cfg.enable {
     programs.kitty = {
       enable = true;
+
       settings = {
         ##############################
         ## template from nix-colors ##
@@ -91,7 +92,6 @@ in {
         bold_font        = "${fontFamily} Bold";
         italic_font      = "${fontFamily} Light";
         bold_italic_font = "${fontFamily} Light";
-
         font_size = "16.0";
         enable_audio_bell = false;
 
@@ -111,13 +111,16 @@ in {
         macos_option_as_alt = "left";
 
         paste_actions = "replace-dangerous-control-codes,filter";
+      } // lib.optionalAttrs (isLinux && builtins.getEnv "WSL_DISTRO_NAME" != "") {
+        # Force X11 in WSL to avoid Wayland issues
+        linux_display_server = "x11";
       };
 
       keybindings = {
         # used by fzf in vim
-        "ctrl+shift+v" = "no_op";
-        "ctrl+shift+s" = "no_op";
-        "alt+shift+p" = "no_op";
+        #"ctrl+shift+v" = "no_op";
+        #"ctrl+shift+s" = "no_op";
+        #"alt+shift+p" = "no_op";
 
         # disable split-screen
         "cmd+enter" = "no_op";
@@ -126,5 +129,20 @@ in {
         "ctrl+shift+t" = "new_tab_with_cwd";
       };
     };
+
+    home.packages = mkIf isLinux [ pkgs.xclip ];
+
+    # Create desktop entry for WSL integration
+    xdg.desktopEntries = mkIf isLinux {
+      kitty = {
+        name = "Kitty Terminal";
+        comment = "Fast, feature-rich, GPU-accelerated terminal emulator";
+        exec = "kitty";
+        icon = "kitty";
+        categories = [ "System" "TerminalEmulator" ];
+        startupNotify = true;
+      };
+    };
   };
+
 }

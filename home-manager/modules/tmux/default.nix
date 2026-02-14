@@ -20,18 +20,31 @@ in {
 
     programs.tmux = {
       enable = true;
+      shell = "${pkgs.zsh}/bin/zsh";
       plugins = with pkgs.tmuxPlugins; [
-        sensible
+      #  sensible
         fzf-tmux-url
-        resurrect
-        continuum
       ]
       ++ lib.optionals cfg.nvim [
         vim-tmux-navigator
+      ]
+      ++ [
+        # resurrect must come before continuum
+        resurrect
+        continuum
       ];
 
       extraConfig = ''
         set -g default-terminal "screen-256color"
+
+        # sensible stuff
+        set -s escape-time 0
+        set -g history-limit 50000
+        set -g display-time 4000
+        set -g status-interval 5
+        set -g status-keys emacs
+        set -g focus-events on
+        
 
         set -g prefix C-a
         unbind C-b
@@ -56,11 +69,27 @@ in {
         set -g mouse on
 
         set-window-option -g mode-keys vi
+        bind-key Enter copy-mode
 
         bind-key -T copy-mode-vi 'v' send -X begin-selection
+
+
         bind-key -T copy-mode-vi 'y' send -X copy-selection
 
         unbind -T copy-mode-vi MouseDragEnd1Pane
+
+        set -g @resurrect-strategy-vim 'session'
+        set -g @resurrect-strategy-nvim 'session'
+        set -g @resurrect-capture-pane-contents 'on'
+        set -g @resurrect-processes '~Vim -> vim'
+
+        set -g @continuum-restore 'on'
+        set -g @continuum-boot 'on'
+        set -g @continuum-save-interval '1'
+
+        resurrect_dir="$HOME/.tmux/resurrect"
+        set -g @resurrect-dir $resurrect_dir
+        set -g @resurrect-hook-post-save-all 'target=$(readlink -f $resurrect_dir/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g" $target | sponge $target'
       '';
     };
   };

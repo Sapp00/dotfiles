@@ -10,6 +10,8 @@
   stateVersion,
   username,
   isHomeManaged,
+  hostname ? "",
+  isWSL ? false,
   ...
 }:
 let
@@ -35,7 +37,7 @@ in
     [
       nix-colors.homeManagerModules.default
     ] 
-    ++ lib.optional isWorkstation "${self}/home-manager/desktops/${desktop}"
+    ++ lib.optional isWorkstation "${self}/home-manager/desktops"
     ++ lib.optional userModulesPathExist userModulesPath
     ++ lib.optional isHomeManaged commonModules
   ;
@@ -58,6 +60,7 @@ in
         # basic stuff
         openssl
         pkg-config
+        moreutils
       ]
       ++ lib.optionals isLinux [
         figlet
@@ -87,7 +90,13 @@ in
   };*/
 
 
-  programs.git.enable = true;
+  # Enable XDG for proper desktop integration on Linux
+  xdg.enable = isLinux;
+
+  programs.git = {
+    enable = true;
+    userName = username;
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

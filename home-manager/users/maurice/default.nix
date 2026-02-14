@@ -1,6 +1,7 @@
 { isWorkstation
 , isLinux
 , desktop
+, isWSL ? false
 , ...
 }:
 {
@@ -16,7 +17,8 @@
     #ripgrep.enable        = true;
     #lazygit.enable        = true;
     nvim.enable           = true;
-    fish.enable           = true;
+    fish.enable           = false;
+    zsh.enable            = true;
     tmux.enable           = true;
     python.enable        = true;
 

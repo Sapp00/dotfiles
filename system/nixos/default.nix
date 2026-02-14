@@ -12,6 +12,7 @@
   stateVersion,
   username,
   isInstall,
+  isWSL ? false,
   ...
 }:
 let
@@ -26,28 +27,35 @@ in
     inputs.home-manager.nixosModules.home-manager
     ../common
     ./machine/${hostname}
-    
+    ./modules/nvidia.nix
+    ./modules/containers.nix
   ];
 
   users.users.${username} = {
     name = username;
     isNormalUser = true;
     home = "/home/${username}";
+    shell = pkgs.zsh;
+    extraGroups = [ "wheel" ];
   };
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.extraSpecialArgs = {
     inherit self
+    inputs
     desktop
+    pkgs
     username;
   };
   home-manager.sharedModules = [{
-    imports = [../../home-manager/modules];
+    imports = ["${self}/home-manager/modules"];
   }];
-  home-manager.users.${username} = import "${self}/home-manager" { inherit self inputs lib desktop outputs username isWorkstation pkgs config stateVersion isHomeManaged; };
+  home-manager.users.${username} = import "${self}/home-manager" { inherit self inputs lib desktop outputs username isWorkstation pkgs config stateVersion isHomeManaged isWSL hostname; };
 
   environment = {
+    shells = [ pkgs.zsh ];
+    
     defaultPackages =
       with pkgs;
       lib.mkForce [
@@ -65,7 +73,7 @@ in
         nvd
         nvme-cli
         rsync
-        smartmontools
+	#smartmontools
         sops
       ];
 
@@ -112,7 +120,7 @@ in
 
   programs = {
     command-not-found.enable = false;
-    fish = {
+    zsh = {
       enable = true;
       shellAliases = {
         nano = "micro";
@@ -141,7 +149,7 @@ in
   services = {
     fwupd.enable = isInstall;
     hardware.bolt.enable = true;
-    smartd.enable = isInstall;
+    #smartd.enable = isInstall;
   };
 
   system = {
