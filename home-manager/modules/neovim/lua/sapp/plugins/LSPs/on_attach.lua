@@ -16,6 +16,12 @@ return function(_, bufnr)
   map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
+  -- Diagnostics (QWERTZ-friendly)
+  map('<leader>dp', vim.diagnostic.goto_prev, '[D]iagnostic [P]revious')
+  map('<leader>dn', vim.diagnostic.goto_next, '[D]iagnostic [N]ext')
+  map('<leader>df', vim.diagnostic.open_float, '[D]iagnostic [F]loat')
+  map('<leader>ds', vim.diagnostic.setloclist, '[D]iagnostic [S]et location list')
+
   -- See `:help K` for why this keymap
   map('K', vim.lsp.buf.hover, 'Hover Documentation')
   map('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')

@@ -22,7 +22,7 @@ in {
       
       # Enable useful zsh options
       enableCompletion = true;
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       
       # Oh My Zsh configuration

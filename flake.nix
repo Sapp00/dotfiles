@@ -14,7 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     disko = {
@@ -30,7 +30,6 @@
 
     nixCats = {
       url = "github:BirdeeHub/nixCats-nvim";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
@@ -43,7 +42,7 @@
 
       inherit (nixpkgs.lib.filesystem) packagesFromDirectoryRecursive listFilesRecursive;
 
-      stateVersion = "24.05";
+      stateVersion = "24.11";
       helper = import ./lib { inherit self inputs outputs stateVersion; };
     in{
       

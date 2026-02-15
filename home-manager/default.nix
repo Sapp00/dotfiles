@@ -53,7 +53,7 @@ in
       [
         # dev tools
         go
-        nodejs_22
+        nodejs  # Now using unstable via overlay
         clang
         cmake
         cargo

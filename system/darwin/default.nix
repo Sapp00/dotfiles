@@ -34,11 +34,13 @@ in
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
+  home-manager.backupFileExtension = "backup";
   home-manager.sharedModules = [{
     imports = [../../home-manager/modules];
   }];
   home-manager.extraSpecialArgs = {
     inherit self
+    inputs
     desktop
     username;
   };
@@ -77,6 +79,9 @@ in
       upgrade = true;
       cleanup = "zap";
     };
+    casks = [
+      "openscad"
+    ];
   };
 
   nixpkgs = {
@@ -92,7 +97,6 @@ in
   nix = {
     optimise.automatic = true;
     settings = {
-      auto-optimise-store = true;
       experimental-features = [
         "nix-command"
         "flakes"
@@ -107,10 +111,6 @@ in
   programs = {
     zsh = {
       enable = true;
-      shellAliases = {
-        nano = "micro";
-        vim = "nvim";
-      };
     };
     #gnupg.agent = {}
     info.enable = false;
@@ -121,7 +121,6 @@ in
   #security.pam.enableSudoTouchIdAuth = true;
 
   services = {
-    activate-system.enable = true;
     nix-daemon.enable = true;
   };
 
