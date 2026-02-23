@@ -36,6 +36,9 @@ in {
 
       extraConfig = ''
         set -g default-terminal "screen-256color"
+        
+        # Start zsh as login shell to load nix profiles and PATH
+        set-option -g default-command "${pkgs.zsh}/bin/zsh -l"
 
         # sensible stuff
         set -s escape-time 0
