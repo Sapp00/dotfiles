@@ -118,6 +118,8 @@ in
 
   nixpkgs.hostPlatform = lib.mkDefault "${platform}";
 
+  networking.hostName = hostname;
+
   programs = {
     command-not-found.enable = false;
     zsh = {

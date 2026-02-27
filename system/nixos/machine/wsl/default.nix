@@ -21,6 +21,7 @@ in {
     enable = true;
     defaultUser = username;
     startMenuLaunchers = true;
+    wslConf.network.hostname = hostname;
   };
 
   # Force X11 for GUI applications to avoid Wayland hibernation issues

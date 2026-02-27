@@ -3,34 +3,32 @@
 
 {
   self,
-  inputs,
-  outputs,
-  stateVersion,
-  ...
+    inputs,
+    outputs,
+    stateVersion,
+    ...
 }@args:
 let
-  lib = inputs.nixpkgs.lib;
+lib = inputs.nixpkgs.lib;
 in
 {
-  # Helper function for generating home-manager configs
+# Helper function for generating home-manager configs
   mkHome =
-    {
-      hostname,
-      username ? "maurice",
-      desktop ? null,
-      platform ? "x86_64-linux",
-    }:
-    let
-      isISO = builtins.substring 0 4 hostname == "iso-";
-      isInstall = !isISO;
-      isLaptop = builtins.match ".*laptop.*" (lib.toLower hostname) != null;
-      isLima = hostname == "blackace" || hostname == "defender" || hostname == "fighter";
-      isLime = false;
-      isWorkstation = builtins.isString desktop;
-      isWSL = builtins.match ".*WSL.*" hostname != null;
-      isHomeManaged = false;
+  {
+    hostname,
+    username ? "maurice",
+    desktop ? null,
+    platform ? "x86_64-linux",
+  }:
+  let
+    isISO = builtins.substring 0 4 hostname == "iso-";
+    isInstall = !isISO;
+    isLaptop = builtins.match ".*laptop.*" (lib.toLower hostname) != null;
+    isWorkstation = builtins.isString desktop;
+    isWSL = builtins.match ".*wsl.*" hostname != null;
+    isHomeManaged = false;
 
-    in
+  in
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${platform};
       extraSpecialArgs = {
@@ -45,7 +43,6 @@ in
           stateVersion
           isInstall
           isLaptop
-          isLima
           isISO
           isWorkstation
           isHomeManaged
@@ -55,26 +52,26 @@ in
       modules = [ ../home-manager ];
     };
 
-  # Helper function for generating NixOS configs
+# Helper function for generating NixOS configs
   mkNixos =
-    {
-      hostname,
-      username ? "maurice",
-      desktop ? null,
-      platform ? "x86_64-linux",
-      proxy ? "",
-      nvidia ? false,
-      docker ? false
-    }:
-    let
-      isISO = builtins.substring 0 4 hostname == "iso-";
-      isInstall = !isISO;
-      isLaptop = builtins.match ".*laptop.*" (lib.toLower hostname) != null;
-      isWorkstation = builtins.isString desktop;
-      isWSL = builtins.match ".*WSL.*" hostname != null;
-      hasProxy = builtins.isString proxy;
-      #tailNet = "drongo-gamma.ts.net";
-    in
+  {
+    hostname,
+    username ? "maurice",
+    desktop ? null,
+    platform ? "x86_64-linux",
+    proxy ? "",
+    nvidia ? false,
+    docker ? false
+  }:
+  let
+    isISO = builtins.substring 0 4 hostname == "iso-";
+  isInstall = !isISO;
+  isLaptop = builtins.match ".*laptop.*" (lib.toLower hostname) != null;
+  isWorkstation = builtins.isString desktop;
+  isWSL = builtins.match ".*wsl.*" hostname != null;
+  hasProxy = builtins.isString proxy;
+#tailNet = "drongo-gamma.ts.net";
+  in
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit

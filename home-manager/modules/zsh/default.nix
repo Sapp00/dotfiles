@@ -1,6 +1,7 @@
 { 
   lib
 , config
+, hostname
 , username
 , pkgs
 , homeModules
@@ -24,6 +25,10 @@ in {
       enableCompletion = true;
       enableAutosuggestions = true;
       syntaxHighlighting.enable = true;
+
+      sessionVariables = {
+          NIXPKGS_ALLOW_UNFREE = 1;
+      };
       
       # Oh My Zsh configuration
       oh-my-zsh = {
@@ -82,6 +87,9 @@ in {
         "fuck" = "_ !!";
         "ll" = "ls -la";
         "la" = "ls -la";
+
+        "nd" = "nix develop --impure -c zsh";
+        "nr" = "sudo nixos-rebuild switch --flake \".#$(hostname)\"";
       };
 
       # History configuration

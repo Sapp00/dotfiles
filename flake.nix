@@ -18,7 +18,7 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     disko = {
-      url = github:nix-community/disko;
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -49,13 +49,13 @@
       
       # nixOS
       nixosConfigurations = {
-        devVM = helper.mkNixos {
-          hostname = "devVM";
+        dev-vm = helper.mkNixos {
+          hostname = "dev-vm";
           desktop = "hyprland";
         };
 
-        devPi = helper.mkNixos {
-          hostname = "devPi";
+        dev-pi = helper.mkNixos {
+          hostname = "dev-pi";
           platform = "aarch64-linux";
         };
         
@@ -64,21 +64,22 @@
           username = "maurice";
         };
 
-        WSL = helper.mkNixos {
-          hostname = "WSL";
+        wsl = helper.mkNixos {
+          hostname = "wsl";
           desktop = "hyprland";
           nvidia = true;
+          docker = true;
         };
 
-        WSL-proxy = helper.mkNixos {
-          hostname = "WSL";
+        wsl-proxy = helper.mkNixos {
+          hostname = "wsl-proxy";
           desktop = "hyprland";
           proxy = "http://localhost:3128";
           nvidia = true;
         };
 
-        WSL-laptop = helper.mkNixos {
-          hostname = "WSL-laptop";
+        wsl-laptop = helper.mkNixos {
+          hostname = "wsl-laptop";
           desktop = "hyprland";
           nvidia = true;
           docker = true;
