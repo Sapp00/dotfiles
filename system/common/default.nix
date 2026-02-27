@@ -12,7 +12,8 @@ in
 {
   imports = builtins.trace "inputs@common/default.nix: ${toString (builtins.attrNames inputs)}" (
     builtins.filter (module: lib.pathIsDirectory module) (
-      map (module: "${homeModules}/${module}") (builtins.attrNames (builtins.readDir homeModules))
+      map (module: "${homeModules}/${module}") 
+      (builtins.filter (name: name != "default.nix") (builtins.attrNames (builtins.readDir homeModules)))
     )
   );
 }

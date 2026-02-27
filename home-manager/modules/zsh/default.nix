@@ -23,7 +23,7 @@ in {
       
       # Enable useful zsh options
       enableCompletion = true;
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
 
       sessionVariables = {

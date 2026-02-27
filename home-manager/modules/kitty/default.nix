@@ -16,6 +16,8 @@ let
   # TODO: This does not work. It does not receive the desktop arguments somehow
   #background_opacity = ".8";
   background_opacity = if builtins.isString desktop && isLinux then "0.8" else "1.0";
+
+  fontFamily = "FiraCode Nerd Font Mono";
 in {
   options = {
     module.kitty.enable = mkEnableOption "Enables kitty";
@@ -86,10 +88,10 @@ in {
         ## end of template ##
         #####################
 
-        font_family	= "Iosevka Nerd Font";
-        bold_font	= "Iosevka Nerd Font Bold";
-        bold_italic_font = "Iosevka Nerd Font Bold Italic";
-        italic_font	= "Iosevka Nerd Font Italic";
+        font_family      = "${fontFamily} Medium";
+        bold_font        = "${fontFamily} Bold";
+        italic_font      = "${fontFamily} Light";
+        bold_italic_font = "${fontFamily} Light";
         font_size = "16.0";
         enable_audio_bell = false;
 

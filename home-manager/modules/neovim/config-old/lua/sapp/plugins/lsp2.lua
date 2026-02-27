@@ -138,5 +138,31 @@ return {
       config = function()
         require("sapp.lsp.rustacean")
       end
+  },
+  {
+    'olimorris/codecompanion.nvim',
+    config = function()
+      require('codecompanion').setup {
+        strategies = {
+          chat = {
+            adapter = "ollama",
+          },
+          inline = {
+            adapter = "ollama",
+          },
+        },
+        adapters = {
+          ollama = function()
+            return require("codecompanion.adapters").extend("openai_compatible", {
+              env = {
+                url = "http://127.0.0.1:11434", -- optional: default value is ollama url http://127.0.0.1:11434
+                api_key = "OpenAI_API_KEY", -- optional: if your endpoint is authenticated
+                chat_url = "/v1/chat/completions", -- optional: default value, override if different
+              },
+            })
+          end,
+        },
+      }
+    end,
   }
 }

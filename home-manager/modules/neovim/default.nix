@@ -1,4 +1,4 @@
-{ lib, config, pkgs, homeModules, inputs ? {}, ... }@args:
+{ lib, config, pkgs, homeModules, inputs, ... }@args:
 
 # assert builtins.trace "loading home manager blabla" true;
 # assert builtins.trace "args keys: ${builtins.concatStringsSep ", " (builtins.attrNames args)}" true;
