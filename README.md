@@ -10,14 +10,57 @@ Then clone the repository and run one of the following depending on the system:
 
 ## NixOS
 ```
-    FLAKE="github:sapp00/dotfiles#devVM"
-    DISK_DEVICE=/dev/sda
-    sudo nix \
-        --extra-experimental-features 'flakes nix-command' \
-        run github:nix-community/disko#disko-install -- \
-        --flake "$FLAKE" \
-        --write-efi-boot-entries \
-        --disk main "$DISK_DEVICE"
+FLAKE="github:sapp00/dotfiles#dev-vm"
+DISK_DEVICE=/dev/sda
+
+# Step 1: Format and mount the target disk
+sudo nix \
+    --extra-experimental-features 'flakes nix-command' \
+    run github:nix-community/disko -- \
+    --mode disko \
+    --flake "$FLAKE" \
+    --disk main "$DISK_DEVICE"
+```
+Step 2: Install directly onto the mounted target disk
+```
+# Step 2: Install directly onto the mounted target disk
+sudo nixos-install \
+    --root /mnt \
+    --flake "$FLAKE" \
+    --no-root-passwd
+```
+
+Step 3: Install EFI boot entries manually
+```
+sudo bootctl --path=/mnt/boot install
+```
+
+### ARM64:
+Step 1: Format and mount the target disk
+```
+FLAKE="github:sapp00/dotfiles#dev-vm-arm64"
+DISK_DEVICE=/dev/sda
+
+# Step 1: Format and mount the target disk
+sudo nix \
+    --extra-experimental-features 'flakes nix-command' \
+    run github:nix-community/disko -- \
+    --mode disko \
+    --flake "$FLAKE" \
+    --disk main "$DISK_DEVICE"
+```
+Step 2: Install directly onto the mounted target disk
+```
+# Step 2: Install directly onto the mounted target disk
+sudo nixos-install \
+    --root /mnt \
+    --flake "$FLAKE" \
+    --no-root-passwd
+```
+
+Step 3: Install EFI boot entries manually
+```
+sudo bootctl --path=/mnt/boot install
 ```
 
 ## WSL
