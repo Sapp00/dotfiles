@@ -43,6 +43,23 @@ in {
     DISPLAY = ":0";
   };
 
+  # open iscsi
+  services.openiscsi = {
+    enable = true;
+    name = "iqn.2024-09.com.nixos:${hostname}";
+    
+    discoverPortal = "10.10.2.6";
+
+    extraConfig = ''
+      node.session.auth.authmethod = CHAP
+      node.session.auth.username = mauricedesktop
+      node.session.auth.password = TGST3MhP4uUWQv
+
+      discovery.sendtargets.auth.authmethod = CHAP
+      discovery.sendtargets.auth.username = mauricedesktop
+      discovery.sendtargets.auth.password = TGST3MhP4uUWQv
+    '';
+  };
 
   networking.proxy = mkIf hasProxy {
     default = proxy;

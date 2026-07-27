@@ -10,6 +10,12 @@ in {
       enable32Bit = true;
     };
 
+    hardware.nvidia-container-toolkit = {
+      enable = true;
+      suppressNvidiaDriverAssertion = isWSL;
+      mount-nvidia-executables = true;
+    };
+
     hardware.nvidia = mkMerge [
       {
         # Shared NVIDIA config
@@ -22,6 +28,8 @@ in {
         modesetting.enable = false;
         nvidiaSettings = false;
         open = true;
+
+
       })
 
       # Real system (non-WSL) configuration
@@ -78,6 +86,24 @@ in {
       EXTRA_CCFLAGS = "-I/usr/include";
       DISPLAY = ":0";
       LIBGL_ALWAYS_INDIRECT = "0";
+    };
+
+    systemd.services.nvidia-container-toolkit-cdi-generator = mkIf isWSL {
+      environment.LD_LIBRARY_PATH = "/usr/lib/wsl/lib";
+
+      postStart = ''
+        # Automatically inject missing WSL mounts and env vars into the CDI spec
+        ${pkgs.jq}/bin/jq '
+          .containerEdits.env = (.containerEdits.env // []) + ["LD_LIBRARY_PATH=/usr/lib/wsl/lib"] |
+          .containerEdits.mounts = (.containerEdits.mounts // []) + [{
+            "hostPath": "/usr/lib/wsl",
+            "containerPath": "/usr/lib/wsl",
+            "options": ["nosuid", "nodev", "rbind"] 
+          }]
+        ' /var/run/cdi/nvidia-container-toolkit.json > /var/run/cdi/tmp.json
+        
+        mv /var/run/cdi/tmp.json /var/run/cdi/nvidia-container-toolkit.json
+      '';
     };
 
     # Boot-time kernel modules (non-WSL only)

@@ -53,6 +53,12 @@
           desktop = "hyprland";
         };
 
+        dev-vm-arm64 = helper.mkNixos {
+          hostname = "dev-vm";
+          desktop = "hyprland";
+          platform = "aarch64-linux";
+        };
+
         dev-pi = helper.mkNixos {
           hostname = "dev-pi";
           platform = "aarch64-linux";
