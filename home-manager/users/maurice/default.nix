@@ -5,8 +5,6 @@
 , ...
 }:
 {
-  nixpkgs.overlays = [  ];
-
   module = {
  #   btop.enable           = true;
     go-task.enable          = true;

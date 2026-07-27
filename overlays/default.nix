@@ -8,6 +8,9 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = _final: prev: {
+    # libsecret tests require a running D-Bus secret service, unavailable in the build sandbox
+    libsecret = prev.libsecret.overrideAttrs (_: { doCheck = false; });
+
     # TODO: upgrade-hint; Remove this for >= 24.11
     openasar = prev.openasar.overrideAttrs (_old: rec {
       pname = "openasar";
@@ -30,10 +33,15 @@
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
   unstable-packages = final: prev: {
-    unstable = import inputs.nixpkgs-unstable {
+    unstable = (import inputs.nixpkgs-unstable {
       inherit (final) system;
       config.allowUnfree = true;
-    };
+    }).extend (_ufinal: uprev: {
+      vimPlugins = uprev.vimPlugins // {
+        # neotest 5.8.0 has failing tests on aarch64-linux
+        neotest = uprev.vimPlugins.neotest.overrideAttrs (_: { doCheck = false; });
+      };
+    });
     # Override nodejs to use unstable version to avoid build issues
     nodejs = final.unstable.nodejs;
   };

@@ -61,7 +61,9 @@ in
     platform ? "x86_64-linux",
     proxy ? "",
     nvidia ? false,
-    docker ? false
+    docker ? false,
+    efi ? false,
+    disk ? "/dev/vda"
   }:
   let
     isISO = builtins.substring 0 4 hostname == "iso-";
@@ -92,6 +94,8 @@ in
           proxy
           nvidia
           docker
+          efi
+          disk
        #   tailNet
           ;
       };

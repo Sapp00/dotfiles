@@ -27,6 +27,7 @@ in
     inputs.home-manager.nixosModules.home-manager
     ../common
     ./machine/${hostname}
+    ./modules/desktop.nix
     ./modules/nvidia.nix
     ./modules/containers.nix
   ];
@@ -37,6 +38,7 @@ in
     home = "/home/${username}";
     shell = pkgs.zsh;
     extraGroups = [ "wheel" ];
+    hashedPasswordFile = "/etc/passwords/${username}";
   };
 
   home-manager.useGlobalPkgs = true;

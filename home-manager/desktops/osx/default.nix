@@ -6,8 +6,6 @@
 , ...
 }:
 {
-  nixpkgs.overlays = [  ];
-
   module = {
     nerdfonts.enable = true;
     kitty.enable = true;

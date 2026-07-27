@@ -58,6 +58,7 @@ in
         cmake
         cargo
         # basic stuff
+        lazygit
         openssl
         pkg-config
         moreutils
@@ -90,12 +91,17 @@ in
   };*/
 
 
+  # nix-darwin manages /Applications/Nix Apps; disable HM's own app management
+  # to avoid the App Management TCC permission issue when activation runs as root
+  targets.darwin.linkApps.enable = lib.mkIf isDarwin false;
+  targets.darwin.copyApps.enable = lib.mkIf isDarwin false;
+
   # Enable XDG for proper desktop integration on Linux
   xdg.enable = isLinux;
 
   programs.git = {
     enable = true;
-    userName = username;
+    settings.user.name = username;
   };
 
   # Let Home Manager install and manage itself.

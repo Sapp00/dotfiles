@@ -63,6 +63,7 @@ in
       plistwatch
       sops
       home-manager
+      kitty
     ];
 
     variables = {
@@ -80,7 +81,7 @@ in
       cleanup = "zap";
     };
     casks = [
-      "openscad"
+      "openscad@snapshot"
     ];
   };
 
@@ -100,14 +101,18 @@ in
       enable = true;
       ephemeral = true;
       maxJobs = 4;
+      config = {
+        virtualisation.cores = 4;
+        virtualisation.memorySize = lib.mkForce 8192;
+      };
     };
     settings = {
       experimental-features = [
         "nix-command"
         "flakes"
       ];
-      warn-dirty = false;
       trusted-users = [ "@admin" ];
+      warn-dirty = false;
     };
   };
 
@@ -126,17 +131,11 @@ in
   # TouchID for sudo
   #security.pam.enableSudoTouchIdAuth = true;
 
-  services = {
-    nix-daemon.enable = true;
-  };
-
   system = {
+    primaryUser = username;
     stateVersion = 5;
     activationScripts = {
 
-    };
-    checks = {
-      verifyNixChannels = false;
     };
     defaults = {
       CustomUserPreferences = {

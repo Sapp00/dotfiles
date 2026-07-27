@@ -89,6 +89,7 @@ in {
         "la" = "ls -la";
 
         "nd" = "nix develop --impure -c zsh";
+        "lg" = "lazygit";
         "nr" = "sudo nixos-rebuild switch --flake \".#$(hostname)\"";
       };
 

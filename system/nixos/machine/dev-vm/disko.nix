@@ -1,14 +1,14 @@
+{ efi, disk, lib, ... }:
 {
   disko.devices = {
     disk = {
       main = {
-        # When using disko-install, we will overwrite this value from the commandline
-        device = "/dev/disk/by-id/some-disk-id";
+        device = disk;
         type = "disk";
         content = {
           type = "gpt";
           partitions = {
-            MBR = {
+            MBR = lib.mkIf (!efi) {
               type = "EF02"; # for grub MBR
               size = "1M";
             };

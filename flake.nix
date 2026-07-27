@@ -57,6 +57,8 @@
           hostname = "dev-vm";
           desktop = "hyprland";
           platform = "aarch64-linux";
+          efi = true;
+          disk = "/dev/nvme0n1";
         };
 
         dev-pi = helper.mkNixos {

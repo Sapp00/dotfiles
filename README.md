@@ -35,33 +35,27 @@ Step 3: Install EFI boot entries manually
 sudo bootctl --path=/mnt/boot install
 ```
 
-### ARM64:
-Step 1: Format and mount the target disk
-```
-FLAKE="github:sapp00/dotfiles#dev-vm-arm64"
-DISK_DEVICE=/dev/sda
+### ARM64 (nixos-anywhere):
+Requires the `nix.linux-builder` to be enabled on the build machine (see `system/darwin/default.nix`)
+for cross-compilation from aarch64-darwin to aarch64-linux.
 
-# Step 1: Format and mount the target disk
-sudo nix \
-    --extra-experimental-features 'flakes nix-command' \
-    run github:nix-community/disko -- \
-    --mode disko \
-    --flake "$FLAKE" \
-    --disk main "$DISK_DEVICE"
+Step 1: Generate a hashed password (stored on the target only, never in the repo):
 ```
-Step 2: Install directly onto the mounted target disk
-```
-# Step 2: Install directly onto the mounted target disk
-sudo nixos-install \
-    --root /mnt \
-    --flake "$FLAKE" \
-    --no-root-passwd
+mkdir -p /tmp/extra-files/etc/passwords
+mkpasswd | tr -d '\n' > /tmp/extra-files/etc/passwords/maurice
 ```
 
-Step 3: Install EFI boot entries manually
+Step 2: Install via nixos-anywhere:
 ```
-sudo bootctl --path=/mnt/boot install
+nix run github:nix-community/nixos-anywhere -- \
+    --extra-files /tmp/extra-files \
+    --flake "github:sapp00/dotfiles#dev-vm-arm64" \
+    nixos@<target-ip>
 ```
+
+The password file is written to `/etc/passwords/maurice` on the target and persists across
+`nixos-rebuild switch` runs since it is not managed by Nix. To change the password after
+install, run `passwd maurice` directly on the machine.
 
 ## WSL
 ```
