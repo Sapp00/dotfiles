@@ -96,12 +96,18 @@ in
 
   nix = {
     optimise.automatic = true;
+    linux-builder = {
+      enable = true;
+      ephemeral = true;
+      maxJobs = 4;
+    };
     settings = {
       experimental-features = [
         "nix-command"
         "flakes"
       ];
       warn-dirty = false;
+      trusted-users = [ "@admin" ];
     };
   };
 
