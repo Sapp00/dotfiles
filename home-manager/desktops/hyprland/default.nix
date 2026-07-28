@@ -6,6 +6,8 @@
 , ...
 }:
 {
+  home.packages = [ pkgs.wl-clipboard ];
+
   module = {
     kitty.enable = true;
     nerdfonts.enable = true;
