@@ -21,6 +21,8 @@
     ./tmux
     ./python
     ./nerdfonts
+    ./waybar
+    ./wofi
   ];
 
   /*imports = builtins.filter (module: lib.pathIsDirectory module) (

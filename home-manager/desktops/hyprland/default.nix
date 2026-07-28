@@ -9,6 +9,8 @@
   module = {
     kitty.enable = true;
     nerdfonts.enable = true;
+    waybar.enable = true;
+    wofi.enable = true;
   };
 
   wayland.windowManager.hyprland = {
@@ -21,9 +23,12 @@
 
       env = lib.optionals vm [ "WLR_NO_HARDWARE_CURSORS,1" ];
 
+      exec-once = [ "waybar" ];
+
       bind = [
         # Applications
         "$mod, Return, exec, ${lib.optionalString vm "env LIBGL_ALWAYS_SOFTWARE=1 "}kitty"
+        "$mod, Space, exec, wofi --show drun"
         "$mod, Q, killactive"
         "$mod, F, fullscreen"
         "$mod, V, togglefloating"
