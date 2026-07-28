@@ -34,6 +34,8 @@ in {
 
   virtualisation.vmware.guest.enable = true;
 
+  services.openssh.enable = true;
+
   # Hyprland needs a software renderer fallback — VMware ARM guests lack Vulkan support
   systemd.services.greetd.environment = {
     WLR_RENDERER = "gles2";
