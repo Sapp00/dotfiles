@@ -25,7 +25,7 @@
 
       env = lib.optionals vm [ "WLR_NO_HARDWARE_CURSORS,1" ];
 
-      exec-once = [ "waybar" ];
+      exec-once = [ "waybar" ] ++ lib.optionals vm [ "spice-vdagent" ];
 
       bind = [
         # Applications
