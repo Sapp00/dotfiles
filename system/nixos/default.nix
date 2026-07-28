@@ -95,7 +95,7 @@ in
     ];
 
     config = {
-      allow-unfree = true;
+      allowUnfree = true;
     };
   };
 
