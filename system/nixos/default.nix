@@ -163,6 +163,7 @@ in
 
   # VM-specific configuration
   services.spice-vdagentd.enable = isVirtio;
+  services.qemuGuest.enable = isVM;
 
   hardware.graphics = lib.mkIf isVM {
     enable = true;
