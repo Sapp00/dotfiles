@@ -42,12 +42,12 @@
         neotest = uprev.vimPlugins.neotest.overrideAttrs (_: { doCheck = false; });
       };
       # nixpkgs-unstable regression (~2025-07-26) broke EGL for all Wayland apps;
-      # wrapProgram injects libglvnd into LD_LIBRARY_PATH so glfw-wayland.so can
-      # dlopen libEGL.so.1 at runtime
+      # wrap .kitty-wrapped (the real binary the C wrapper exec's) so LD_LIBRARY_PATH
+      # is set when kitty actually runs, making glfw-wayland.so find libEGL.so.1
       kitty = uprev.kitty.overrideAttrs (old: {
-        nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ uprev.makeWrapper ];
-        postFixup = (old.postFixup or "") + ''
-          wrapProgram $out/bin/kitty \
+        nativeBuildInputs = (old.nativeBuildInputs or []) ++ uprev.lib.optionals uprev.stdenv.isLinux [ uprev.makeWrapper ];
+        postFixup = (old.postFixup or "") + uprev.lib.optionalString uprev.stdenv.isLinux ''
+          wrapProgram $out/bin/.kitty-wrapped \
             --prefix LD_LIBRARY_PATH : "${uprev.lib.makeLibraryPath [ uprev.libglvnd ]}"
         '';
       });
