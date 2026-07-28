@@ -19,11 +19,11 @@
 
       input.kb_layout = "de";
 
-      env = lib.optionals vm [ "WLR_NO_HARDWARE_CURSORS,1" "LIBGL_ALWAYS_SOFTWARE,1" ];
+      env = lib.optionals vm [ "WLR_NO_HARDWARE_CURSORS,1" ];
 
       bind = [
         # Applications
-        "$mod, Return, exec, kitty"
+        "$mod, Return, exec, ${lib.optionalString vm "env LIBGL_ALWAYS_SOFTWARE=1 "}kitty"
         "$mod, Q, killactive"
         "$mod, F, fullscreen"
         "$mod, V, togglefloating"
