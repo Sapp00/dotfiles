@@ -6,6 +6,7 @@
 {
   module = {
     kitty.enable = true;
+    nerdfonts.enable = true;
   };
 
   wayland.windowManager.hyprland = {
