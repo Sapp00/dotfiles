@@ -41,12 +41,14 @@
         # neotest 5.8.0 has failing tests on aarch64-linux
         neotest = uprev.vimPlugins.neotest.overrideAttrs (_: { doCheck = false; });
       };
-      # glfw-wayland.so dlopen's libEGL at runtime but has no RPATH for it;
-      # patch it to find libglvnd so GLFW can initialize EGL on Wayland (VirGL VMs)
+      # nixpkgs-unstable regression (~2025-07-26) broke EGL for all Wayland apps;
+      # wrapProgram injects libglvnd into LD_LIBRARY_PATH so glfw-wayland.so can
+      # dlopen libEGL.so.1 at runtime
       kitty = uprev.kitty.overrideAttrs (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ uprev.makeWrapper ];
         postFixup = (old.postFixup or "") + ''
-          patchelf --add-rpath ${uprev.libglvnd}/lib \
-            $out/lib/kitty/kitty/glfw-wayland.so
+          wrapProgram $out/bin/kitty \
+            --prefix LD_LIBRARY_PATH : "${uprev.lib.makeLibraryPath [ uprev.libglvnd ]}"
         '';
       });
     });
