@@ -48,7 +48,8 @@
         nativeBuildInputs = (old.nativeBuildInputs or []) ++ uprev.lib.optionals uprev.stdenv.isLinux [ uprev.makeWrapper ];
         postFixup = (old.postFixup or "") + uprev.lib.optionalString uprev.stdenv.isLinux ''
           wrapProgram $out/bin/.kitty-wrapped \
-            --prefix LD_LIBRARY_PATH : "${uprev.lib.makeLibraryPath [ uprev.libglvnd ]}"
+            --prefix LD_LIBRARY_PATH : "${uprev.lib.makeLibraryPath [ uprev.libglvnd ]}" \
+            --set-default __EGL_VENDOR_LIBRARY_FILENAMES "/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json"
         '';
       });
     });
