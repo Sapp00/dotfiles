@@ -43,6 +43,7 @@ in
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
+  home-manager.backupFileExtension = "backup";
   home-manager.extraSpecialArgs = {
     inherit self
     inputs
@@ -119,6 +120,9 @@ in
     };
 
   nixpkgs.hostPlatform = lib.mkDefault "${platform}";
+
+  console.keyMap = "de";
+  services.xserver.xkb.layout = "de";
 
   networking.hostName = hostname;
 

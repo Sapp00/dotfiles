@@ -14,6 +14,8 @@
     settings = {
       "$mod" = "SUPER";
 
+      input.kb_layout = "de";
+
       bind = [
         # Applications
         "$mod, Return, exec, kitty"
