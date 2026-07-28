@@ -164,7 +164,7 @@ in
   # VM-specific configuration
   services.spice-vdagentd.enable = isVirtio;
   services.qemuGuest.enable = isVM;
-  boot.kernelModules = lib.optionals isVM [ "9pnet_virtio" ];
+  boot.kernelModules = lib.optionals isVM [ "9pnet_virtio" "9p" "9pnet" ];
 
   hardware.graphics = lib.mkIf isVM {
     enable = true;
