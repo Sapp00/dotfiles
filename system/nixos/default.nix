@@ -72,6 +72,11 @@ in
         git
         nix-output-monitor
       ]
+      ++ lib.optionals isVM [
+        # mesa's share/glvnd/egl_vendor.d/ lands in /run/current-system/sw/share,
+        # which is in XDG_DATA_DIRS so GLVND can find the EGL vendor config
+        mesa
+      ]
       ++ lib.optionals isInstall [
         nvd
         nvme-cli

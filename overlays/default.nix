@@ -41,6 +41,14 @@
         # neotest 5.8.0 has failing tests on aarch64-linux
         neotest = uprev.vimPlugins.neotest.overrideAttrs (_: { doCheck = false; });
       };
+      # glfw-wayland.so dlopen's libEGL at runtime but has no RPATH for it;
+      # patch it to find libglvnd so GLFW can initialize EGL on Wayland (VirGL VMs)
+      kitty = uprev.kitty.overrideAttrs (old: {
+        postFixup = (old.postFixup or "") + ''
+          patchelf --add-rpath ${uprev.libglvnd}/lib \
+            $out/lib/kitty/kitty/glfw-wayland.so
+        '';
+      });
     });
     # Override nodejs to use unstable version to avoid build issues
     nodejs = final.unstable.nodejs;
