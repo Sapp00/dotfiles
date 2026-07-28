@@ -32,7 +32,5 @@ in {
 
   hardware.enableRedistributableFirmware = true;
 
-  virtualisation.vmware.guest.enable = true;
-
   services.openssh.enable = true;
 }

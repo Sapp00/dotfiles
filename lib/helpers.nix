@@ -64,7 +64,7 @@ in
     docker ? false,
     efi ? false,
     disk ? "/dev/vda",
-    vm ? false
+    vmType ? null
   }:
   let
     isISO = builtins.substring 0 4 hostname == "iso-";
@@ -97,7 +97,7 @@ in
           docker
           efi
           disk
-          vm
+          vmType
        #   tailNet
           ;
       };

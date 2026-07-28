@@ -13,10 +13,13 @@
   username,
   isInstall,
   isWSL ? false,
-  vm ? false,
+  vmType ? null,
   ...
 }:
 let
+  isVM = vmType != null;
+  isVMware = vmType == "vmware";
+  isProxmox = vmType == "proxmox";
   isHomeManaged = false;
   desk = builtins.trace desktop desktop;
   homeModules = "${self}/home-manager/modules";
@@ -51,7 +54,8 @@ in
     desktop
     pkgs
     username
-    vm;
+    vmType;
+    vm = isVM;
   };
   home-manager.sharedModules = [{
     imports = ["${self}/home-manager/modules"];
@@ -160,6 +164,16 @@ in
     fwupd.enable = isInstall;
     hardware.bolt.enable = true;
     #smartd.enable = isInstall;
+  };
+
+  # VM-specific configuration
+  virtualisation.vmware.guest.enable = isVMware;
+
+  services.spice-vdagentd.enable = isProxmox;
+
+  hardware.graphics = lib.mkIf isVM {
+    enable = true;
+    extraPackages = lib.mkIf isProxmox [ pkgs.mesa ];
   };
 
   system = {
