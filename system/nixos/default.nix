@@ -13,6 +13,7 @@
   username,
   isInstall,
   isWSL ? false,
+  vm ? false,
   ...
 }:
 let
@@ -49,7 +50,8 @@ in
     inputs
     desktop
     pkgs
-    username;
+    username
+    vm;
   };
   home-manager.sharedModules = [{
     imports = ["${self}/home-manager/modules"];
