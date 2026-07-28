@@ -3,7 +3,6 @@
 , pkgs
 , lib
 , vm ? false
-, vmType ? null
 , ...
 }:
 {
@@ -20,9 +19,7 @@
 
       input.kb_layout = "de";
 
-      env =
-        lib.optionals vm [ "WLR_NO_HARDWARE_CURSORS,1" ]
-        ++ lib.optionals (vmType == "vmware") [ "LIBGL_ALWAYS_SOFTWARE,1" ];
+      env = lib.optionals vm [ "WLR_NO_HARDWARE_CURSORS,1" ];
 
       bind = [
         # Applications

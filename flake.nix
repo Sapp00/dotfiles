@@ -51,7 +51,7 @@
         dev-vm = helper.mkNixos {
           hostname = "dev-vm";
           desktop = "hyprland";
-          vmType = "proxmox";
+          vmType = "virtio";
         };
 
         dev-vm-arm64 = helper.mkNixos {
@@ -59,8 +59,7 @@
           desktop = "hyprland";
           platform = "aarch64-linux";
           efi = true;
-          disk = "/dev/nvme0n1";
-          vmType = "vmware";
+          vmType = "virtio";
         };
 
         dev-pi = helper.mkNixos {

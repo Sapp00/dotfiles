@@ -18,8 +18,7 @@
 }:
 let
   isVM = vmType != null;
-  isVMware = vmType == "vmware";
-  isProxmox = vmType == "proxmox";
+  isVirtio = vmType == "virtio";
   isHomeManaged = false;
   desk = builtins.trace desktop desktop;
   homeModules = "${self}/home-manager/modules";
@@ -41,7 +40,7 @@ in
     isNormalUser = true;
     home = "/home/${username}";
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "video" "render" ];
     hashedPasswordFile = "/etc/passwords/${username}";
   };
 
@@ -49,12 +48,7 @@ in
   home-manager.useUserPackages = true;
   home-manager.backupFileExtension = "backup";
   home-manager.extraSpecialArgs = {
-    inherit self
-    inputs
-    desktop
-    pkgs
-    username
-    vmType;
+    inherit self inputs desktop pkgs username;
     vm = isVM;
   };
   home-manager.sharedModules = [{
@@ -168,13 +162,11 @@ in
   };
 
   # VM-specific configuration
-  virtualisation.vmware.guest.enable = isVMware;
-
-  services.spice-vdagentd.enable = isProxmox;
+  services.spice-vdagentd.enable = isVirtio;
 
   hardware.graphics = lib.mkIf isVM {
     enable = true;
-    extraPackages = lib.mkIf isProxmox [ pkgs.mesa ];
+    extraPackages = lib.mkIf isVirtio [ pkgs.mesa ];
   };
 
   system = {
