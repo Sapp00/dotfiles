@@ -63,7 +63,8 @@ in
     nvidia ? false,
     docker ? false,
     efi ? false,
-    disk ? "/dev/vda"
+    disk ? "/dev/vda",
+    vm ? false
   }:
   let
     isISO = builtins.substring 0 4 hostname == "iso-";
@@ -96,6 +97,7 @@ in
           docker
           efi
           disk
+          vm
        #   tailNet
           ;
       };

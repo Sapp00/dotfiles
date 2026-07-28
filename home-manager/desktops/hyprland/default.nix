@@ -1,6 +1,7 @@
 { isWorkstation
 , isLinux
 , pkgs
+, vm ? false
 , ...
 }:
 {
@@ -16,6 +17,11 @@
       "$mod" = "SUPER";
 
       input.kb_layout = "de";
+
+      env = pkgs.lib.optionals vm [
+        "LIBGL_ALWAYS_SOFTWARE,1"
+        "WLR_NO_HARDWARE_CURSORS,1"
+      ];
 
       bind = [
         # Applications
