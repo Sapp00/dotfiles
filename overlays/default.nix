@@ -41,17 +41,6 @@
         # neotest 5.8.0 has failing tests on aarch64-linux
         neotest = uprev.vimPlugins.neotest.overrideAttrs (_: { doCheck = false; });
       };
-      # nixpkgs-unstable regression (~2025-07-26) broke EGL for all Wayland apps;
-      # wrap .kitty-wrapped (the real binary the C wrapper exec's) so LD_LIBRARY_PATH
-      # is set when kitty actually runs, making glfw-wayland.so find libEGL.so.1
-      kitty = uprev.kitty.overrideAttrs (old: {
-        nativeBuildInputs = (old.nativeBuildInputs or []) ++ uprev.lib.optionals uprev.stdenv.isLinux [ uprev.makeWrapper ];
-        postFixup = (old.postFixup or "") + uprev.lib.optionalString uprev.stdenv.isLinux ''
-          wrapProgram $out/bin/.kitty-wrapped \
-            --prefix LD_LIBRARY_PATH : "${uprev.lib.makeLibraryPath [ uprev.libglvnd ]}" \
-            --set-default __EGL_VENDOR_LIBRARY_FILENAMES "/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json"
-        '';
-      });
     });
     # Override nodejs to use unstable version to avoid build issues
     nodejs = final.unstable.nodejs;
