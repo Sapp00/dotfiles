@@ -19,6 +19,8 @@
     settings = {
       "$mod" = "SUPER";
 
+      monitor = [ "Virtual-1,1920x1080,0x0,1" ];
+
       input.kb_layout = "de";
 
       env = lib.optionals vm [ "WLR_NO_HARDWARE_CURSORS,1" ];
