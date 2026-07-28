@@ -164,6 +164,7 @@ in
     fwupd.enable = isInstall;
     hardware.bolt.enable = true;
     #smartd.enable = isInstall;
+    resolved.enable = true;
   };
 
   # VM-specific configuration
