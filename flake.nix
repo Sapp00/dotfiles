@@ -52,6 +52,7 @@
           hostname = "dev-vm";
           desktop = "hyprland";
           vmType = "virtio";
+          docker = true;
         };
 
         dev-vm-arm64 = helper.mkNixos {
@@ -60,6 +61,7 @@
           platform = "aarch64-linux";
           efi = true;
           vmType = "virtio";
+          docker = true;
         };
 
         dev-pi = helper.mkNixos {
