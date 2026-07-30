@@ -33,6 +33,8 @@ in
     ./modules/desktop.nix
     ./modules/nvidia.nix
     ./modules/containers.nix
+    ./modules/zen-browser.nix
+    ./modules/zen-browser.nix
   ];
 
   users.users.${username} = {
