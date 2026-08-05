@@ -4,17 +4,17 @@
   inputs = {
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     nix-index-database.url = "github:Mic92/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.11";
+    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-26.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     disko = {
@@ -47,7 +47,7 @@
 
       inherit (nixpkgs.lib.filesystem) packagesFromDirectoryRecursive listFilesRecursive;
 
-      stateVersion = "25.11";
+      stateVersion = "26.05";
       helper = import ./lib { inherit self inputs outputs stateVersion; };
     in{
       
