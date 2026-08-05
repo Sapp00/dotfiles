@@ -55,7 +55,7 @@ in
             cmake-format
           ];
           markdown = [
-            marksman
+            unstable.marksman
             harper
           ];
           lua = [

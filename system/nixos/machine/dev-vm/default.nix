@@ -28,6 +28,7 @@ in {
     };
 
     initrd.availableKernelModules = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "virtio_gpu" "9p" "9pnet_virtio" ];
+    growPartition = true;
   };
 
   hardware.enableRedistributableFirmware = true;
