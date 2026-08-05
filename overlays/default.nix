@@ -23,9 +23,9 @@
       };
     });
 
-    hyprland = prev.hyprland.overrideAttrs (_old: rec {
+    hyprland = prev.hyprland.overrideAttrs (_old: {
       postPatch = _old.postPatch + ''
-        sed -i 's|Exec=Hyprland|Exec=hypr-launch|' example/hyprland.desktop
+        sed -i 's|Exec=Hyprland|Exec=hypr-launch|' example/hyprland.desktop.in
       '';
     });
   };
