@@ -15,7 +15,9 @@ with lib;
     virtualisation.docker = {
       enable = true;
       enableOnBoot = true;
-      # Clean up old containers and images periodically
+      daemon.settings = {
+        dns = [ "1.1.1.1" "8.8.8.8" ];
+      };
       autoPrune = {
         enable = true;
         dates = "weekly";
