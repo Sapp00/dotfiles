@@ -102,7 +102,7 @@ in {
       };
 
       # Custom initialization
-      initExtra = ''
+      initContent = ''
         # Set better prompt if oh-my-zsh theme doesn't work
         autoload -U promptinit
         promptinit
