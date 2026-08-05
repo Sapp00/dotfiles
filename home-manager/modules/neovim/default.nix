@@ -101,7 +101,7 @@ in
             HTML = [
               vscode-langservers-extracted
             ];
-            JS = with nodePackages; [
+            JS = with pkgs; [
               typescript-language-server
               eslint
               prettier
