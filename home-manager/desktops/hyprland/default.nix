@@ -19,8 +19,6 @@
     enable = true;
 
     settings = {
-      "$mod" = "SUPER";
-
       monitor = [ "Virtual-1,1920x1080,0x0,1" ];
 
       input.kb_layout = "de";
@@ -31,66 +29,66 @@
 
       bind = [
         # Applications
-        "$mod, Return, exec, ${lib.optionalString vm "env LIBGL_ALWAYS_SOFTWARE=1 "}kitty"
-        "$mod, Space, exec, wofi --show drun"
-        "$mod, Q, killactive"
-        "$mod, F, fullscreen"
-        "$mod, V, togglefloating"
-        "$mod, M, exit"
+        "SUPER, Return, exec, ${lib.optionalString vm "env LIBGL_ALWAYS_SOFTWARE=1 "}kitty"
+        "SUPER, Space, exec, wofi --show drun"
+        "SUPER, Q, killactive"
+        "SUPER, F, fullscreen"
+        "SUPER, V, togglefloating"
+        "SUPER, M, exit"
 
         # Focus (hjkl)
-        "$mod, h, movefocus, l"
-        "$mod, l, movefocus, r"
-        "$mod, k, movefocus, u"
-        "$mod, j, movefocus, d"
+        "SUPER, h, movefocus, l"
+        "SUPER, l, movefocus, r"
+        "SUPER, k, movefocus, u"
+        "SUPER, j, movefocus, d"
 
         # Move windows (hjkl)
-        "$mod SHIFT, h, movewindow, l"
-        "$mod SHIFT, l, movewindow, r"
-        "$mod SHIFT, k, movewindow, u"
-        "$mod SHIFT, j, movewindow, d"
+        "SUPER SHIFT, h, movewindow, l"
+        "SUPER SHIFT, l, movewindow, r"
+        "SUPER SHIFT, k, movewindow, u"
+        "SUPER SHIFT, j, movewindow, d"
 
         # Workspaces
-        "$mod, 1, workspace, 1"
-        "$mod, 2, workspace, 2"
-        "$mod, 3, workspace, 3"
-        "$mod, 4, workspace, 4"
-        "$mod, 5, workspace, 5"
-        "$mod, 6, workspace, 6"
-        "$mod, 7, workspace, 7"
-        "$mod, 8, workspace, 8"
-        "$mod, 9, workspace, 9"
-        "$mod, 0, workspace, 10"
+        "SUPER, 1, workspace, 1"
+        "SUPER, 2, workspace, 2"
+        "SUPER, 3, workspace, 3"
+        "SUPER, 4, workspace, 4"
+        "SUPER, 5, workspace, 5"
+        "SUPER, 6, workspace, 6"
+        "SUPER, 7, workspace, 7"
+        "SUPER, 8, workspace, 8"
+        "SUPER, 9, workspace, 9"
+        "SUPER, 0, workspace, 10"
 
         # Move window to workspace
-        "$mod SHIFT, 1, movetoworkspace, 1"
-        "$mod SHIFT, 2, movetoworkspace, 2"
-        "$mod SHIFT, 3, movetoworkspace, 3"
-        "$mod SHIFT, 4, movetoworkspace, 4"
-        "$mod SHIFT, 5, movetoworkspace, 5"
-        "$mod SHIFT, 6, movetoworkspace, 6"
-        "$mod SHIFT, 7, movetoworkspace, 7"
-        "$mod SHIFT, 8, movetoworkspace, 8"
-        "$mod SHIFT, 9, movetoworkspace, 9"
-        "$mod SHIFT, 0, movetoworkspace, 10"
+        "SUPER SHIFT, 1, movetoworkspace, 1"
+        "SUPER SHIFT, 2, movetoworkspace, 2"
+        "SUPER SHIFT, 3, movetoworkspace, 3"
+        "SUPER SHIFT, 4, movetoworkspace, 4"
+        "SUPER SHIFT, 5, movetoworkspace, 5"
+        "SUPER SHIFT, 6, movetoworkspace, 6"
+        "SUPER SHIFT, 7, movetoworkspace, 7"
+        "SUPER SHIFT, 8, movetoworkspace, 8"
+        "SUPER SHIFT, 9, movetoworkspace, 9"
+        "SUPER SHIFT, 0, movetoworkspace, 10"
 
         # Scroll through workspaces
-        "$mod, mouse_down, workspace, e+1"
-        "$mod, mouse_up, workspace, e-1"
+        "SUPER, mouse_down, workspace, e+1"
+        "SUPER, mouse_up, workspace, e-1"
       ];
 
       # Resize windows with SUPER + CTRL + hjkl (like tmux pane resize)
       binde = [
-        "$mod CTRL, h, resizeactive, -40 0"
-        "$mod CTRL, l, resizeactive, 40 0"
-        "$mod CTRL, k, resizeactive, 0 -40"
-        "$mod CTRL, j, resizeactive, 0 40"
+        "SUPER CTRL, h, resizeactive, -40 0"
+        "SUPER CTRL, l, resizeactive, 40 0"
+        "SUPER CTRL, k, resizeactive, 0 -40"
+        "SUPER CTRL, j, resizeactive, 0 40"
       ];
 
       # Mouse bindings
       bindm = [
-        "$mod, mouse:272, movewindow"
-        "$mod, mouse:273, resizewindow"
+        "SUPER, mouse:272, movewindow"
+        "SUPER, mouse:273, resizewindow"
       ];
     };
   };
