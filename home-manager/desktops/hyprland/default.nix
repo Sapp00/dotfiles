@@ -11,9 +11,10 @@ let
 
   # Bind abstractions wrapping hl.bind() mapping
   bind = key: action: { _args = [ key (lua action) ]; };
-  bindRepeat = key: action: { _args = [ key (lua action) (lua ''{ ["repeat"] = true }'') ]; };
+  bindRepeat = key: action: { _args = [ key (lua action) (lua ''{ repeating = true }'') ]; };
+  bindMouse = key: action: { _args = [ key (lua action) (lua ''{ mouse = true }'') ]; };
   
-  # Dispatcher commands modeled after the Hyprland Lua API
+  # Dispatcher commands modeled after the Hyprland 0.55 Lua API
   exec = cmd: ''hl.dsp.exec_cmd("${cmd}")'';
   close = ''hl.dsp.window.close()'';
   exit = ''hl.dsp.exit()'';
@@ -23,7 +24,9 @@ let
   moveDir = dir: ''hl.dsp.window.move({ direction = "${dir}" })'';
   focusWs = ws: ''hl.dsp.focus({ workspace = "${ws}" })'';
   moveWs = ws: ''hl.dsp.window.move({ workspace = "${ws}" })'';
-  resizeActive = vec: ''hl.dsp.window.resize_active("${vec}")''; 
+  
+  # The resize dispatcher takes a Lua table of relative coordinates
+  resizeActive = x: y: ''hl.dsp.window.resize({ x = ${x}, y = ${y}, relative = true })''; 
 in
 {
   home.packages = [ pkgs.wl-clipboard ];
@@ -63,7 +66,7 @@ in
         }
       ];
 
-      # 4. Binds must be an array of mapped functions with `+` separating mods
+      # 4. Binds
       bind = [
         # Applications
         (bind "SUPER + Return" (exec "${lib.optionalString vm "env LIBGL_ALWAYS_SOFTWARE=1 "}kitty"))
@@ -88,10 +91,6 @@ in
         # Scroll through workspaces
         (bind "SUPER + mouse_down" (focusWs "e+1"))
         (bind "SUPER + mouse_up" (focusWs "e-1"))
-
-        # Mouse bindings (bindm becomes a regular bind passing mouse actions)
-        (bind "SUPER + mouse:272" ''hl.dsp.window.drag()'')
-        (bind "SUPER + mouse:273" ''hl.dsp.window.resize()'')
       ] 
       # Dynamically generate workspace binds (1-10) using our helper
       ++ builtins.concatLists (builtins.genList (x:
@@ -103,12 +102,16 @@ in
           (bind "SUPER + SHIFT + ${ws}" (moveWs wsId))
         ]
       ) 10)
-      # Repeating resize bindings (formerly binde)
+      # Repeating resize bindings and mouse dragging
       ++ [
-        (bindRepeat "SUPER + CTRL + h" (resizeActive "-40 0"))
-        (bindRepeat "SUPER + CTRL + l" (resizeActive "40 0"))
-        (bindRepeat "SUPER + CTRL + k" (resizeActive "0 -40"))
-        (bindRepeat "SUPER + CTRL + j" (resizeActive "0 40"))
+        (bindRepeat "SUPER + CTRL + h" (resizeActive "-40" "0"))
+        (bindRepeat "SUPER + CTRL + l" (resizeActive "40" "0"))
+        (bindRepeat "SUPER + CTRL + k" (resizeActive "0" "-40"))
+        (bindRepeat "SUPER + CTRL + j" (resizeActive "0" "40"))
+
+        # Mouse bindings (requires { mouse = true } flag)
+        (bindMouse "SUPER + mouse:272" ''hl.dsp.window.drag()'')
+        (bindMouse "SUPER + mouse:273" ''hl.dsp.window.resize()'')
       ];
     };
   };
