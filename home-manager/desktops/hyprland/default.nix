@@ -19,8 +19,10 @@
     enable = true;
 
     extraConfig = ''
-      exec-once = waybar
-      ${lib.optionalString vm "exec-once = spice-vdagent"}
+      hl.on("hyprland.start", function()
+        hl.exec_cmd("waybar")
+        ${lib.optionalString vm ''hl.exec_cmd("spice-vdagent")''}
+      end)
     '';
 
     settings = {
