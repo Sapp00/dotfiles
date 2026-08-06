@@ -18,14 +18,17 @@
   wayland.windowManager.hyprland = {
     enable = true;
 
+    extraConfig = ''
+      exec-once = waybar
+      ${lib.optionalString vm "exec-once = spice-vdagent"}
+    '';
+
     settings = {
       monitor = [ "Virtual-1,1920x1080,0x0,1" ];
 
       input.kb_layout = "de";
 
       env = lib.optionals vm [ "WLR_NO_HARDWARE_CURSORS,1" ];
-
-      exec-once = [ "waybar" ] ++ lib.optionals vm [ "spice-vdagent" ];
 
       bind = [
         # Applications
