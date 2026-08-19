@@ -13,6 +13,14 @@
     plugins = {
       clipboard = inputs.clipboard-yazi;
     };
+    settings = lib.mkIf pkgs.stdenv.isLinux {
+      opener = {
+        image = [{ run = ''loupe "$@"''; orphan = true; desc = "Loupe"; }];
+      };
+      open.rules = [
+        { mime = "image/*"; use = "image"; }
+      ];
+    };
     keymap.mgr.prepend_keymap = [
       {
         on = "y";
