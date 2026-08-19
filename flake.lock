@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "clipboard-yazi": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785930648,
+        "narHash": "sha256-hDNjQ0h3LOjgOb+1rf8bVbZYA9y6p8wGZsjFjfiLm8w=",
+        "owner": "XYenon",
+        "repo": "clipboard.yazi",
+        "rev": "0f4982a65ef5f249c08dd4a3d335d179694c4f9b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "XYenon",
+        "repo": "clipboard.yazi",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -250,6 +266,7 @@
     },
     "root": {
       "inputs": {
+        "clipboard-yazi": "clipboard-yazi",
         "disko": "disko",
         "home-manager": "home-manager",
         "nix-colors": "nix-colors",

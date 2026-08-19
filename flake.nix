@@ -34,6 +34,11 @@
 
     nix-colors.url = "github:misterio77/nix-colors";
 
+    clipboard-yazi = {
+      url = "github:XYenon/clipboard.yazi";
+      flake = false;
+    };
+
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";

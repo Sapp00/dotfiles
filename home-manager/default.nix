@@ -104,6 +104,10 @@ in
     settings.user.name = username;
   };
 
+  programs.yazi = {
+    enable = true;
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
