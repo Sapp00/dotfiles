@@ -4,6 +4,7 @@
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
     pkgs.unstable.nerd-fonts.iosevka
+  ] ++ lib.optionals pkgs.stdenv.isLinux [
     thunar
     loupe
   ];
