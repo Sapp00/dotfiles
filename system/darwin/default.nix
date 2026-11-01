@@ -80,6 +80,9 @@ in
       upgrade = true;
       cleanup = "zap";
     };
+    brews = [
+      "openssh"
+    ];
     casks = [
       "openscad@snapshot"
     ];
